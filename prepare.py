@@ -1,0 +1,14 @@
+import os
+
+# PINE_ENVIRONMENT = os.getenv('PINE_ENVIRONMENT')
+# PINE_KEY = os.getenv('PINE_KEY')
+# PINE_INDEX = os.getenv('PINE_INDEX')
+#
+# CHATGLM_KEY = os.getenv('CHATGLM_KEY')
+
+CHATGLM_KEY="a333b62b0b117025f9c6f349b462436a.ZbNY1lGk2Pkvf4hG"
+
+PINECONE_API_KEY="7d8542c2-d2d0-4ab5-ad22-dd013e280fbd"
+PINECONE_ENVIRONMENT="gcp-starter"
+
+PINECONE_INDEX_NAME="pdf"
