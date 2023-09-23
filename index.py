@@ -1,5 +1,5 @@
 import streamlit as st
-from chat import chatbot, Message
+from chat import chatbot
 import time
 
 
@@ -25,11 +25,14 @@ def chat():
         with st.chat_message("assistant"):
             message_placeholder = st.empty()
             full_response = ""
-            response = chatbot(prompt)
+            response, sources, texts = chatbot(prompt)
             for event in response.events():
                 full_response += event.data
                 message_placeholder.markdown(full_response + "▌")
             message_placeholder.markdown(full_response)
+            for i in range(len(sources)):
+                with st.expander(sources[i]):
+                    st.markdown(texts[i])
             st.session_state.messages.append({"role": "assistant", "content": full_response})
 
 

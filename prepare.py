@@ -1,14 +1,22 @@
 import os
+from dotenv import load_dotenv
 
-# PINE_ENVIRONMENT = os.getenv('PINE_ENVIRONMENT')
-# PINE_KEY = os.getenv('PINE_KEY')
-# PINE_INDEX = os.getenv('PINE_INDEX')
-#
-# CHATGLM_KEY = os.getenv('CHATGLM_KEY')
+# 指定.env文件的路径
+dotenv_path = '.env'
+load_dotenv(dotenv_path)
 
-CHATGLM_KEY="a333b62b0b117025f9c6f349b462436a.ZbNY1lGk2Pkvf4hG"
+# 加载环境变量
+load_dotenv(dotenv_path)
 
-PINECONE_API_KEY="7d8542c2-d2d0-4ab5-ad22-dd013e280fbd"
-PINECONE_ENVIRONMENT="gcp-starter"
+PINECONE_ENVIRONMENT = os.getenv('PINECONE_ENVIRONMENT')
+PINECONE_API_KEY = os.getenv('PINECONE_API_KEY')
+PINECONE_INDEX_NAME = os.getenv('PINECONE_INDEX_NAME')
 
-PINECONE_INDEX_NAME="pdf"
+CHATGLM_KEY = os.getenv('CHATGLM_KEY')
+
+
+if __name__ == '__main__':
+    print(PINECONE_ENVIRONMENT)
+    print(PINECONE_API_KEY)
+    print(PINECONE_INDEX_NAME)
+    print(CHATGLM_KEY)

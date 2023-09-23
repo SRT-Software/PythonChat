@@ -8,10 +8,12 @@ def match_query(ques):
         model="text_embedding",
         prompt=ques
     )['data']['embedding']
-
     p = initPinecone()
     index = p.Index(PINECONE_INDEX_NAME)
-    res = index.query(embedding, top_k=4, include_metadata=True)
+    res = index.query(embedding,
+                      top_k=4,
+                      include_metadata=True,
+    )
     return res
 
 if __name__ == '__main__':

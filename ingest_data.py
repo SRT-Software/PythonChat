@@ -7,7 +7,7 @@ from langchain.document_loaders import DirectoryLoader, PyPDFLoader
 import zhipuai
 
 filePath = 'docs'
-zhipuai.api_key = "a333b62b0b117025f9c6f349b462436a.ZbNY1lGk2Pkvf4hG"
+zhipuai.api_key = CHATGLM_KEY
 
 
 
@@ -23,18 +23,19 @@ def ingest():
     pineconeStorage = initPinecone()
     directoryLoader = DirectoryLoader('docs', glob='*.pdf', loader_cls=PyPDFLoader)
     rawDocs = directoryLoader.load()
-    print(len(rawDocs))
-    textSplitter = RecursiveCharacterTextSplitter(chunk_size=1000, chunk_overlap=200)
+    textSplitter = RecursiveCharacterTextSplitter(chunk_size=200, chunk_overlap=100)
     docs = textSplitter.split_documents(rawDocs)
     content_list = [chunk.page_content for chunk in docs]
+    print(len(content_list))
     embedding_list = []
     for content in content_list:
         response = zhipuai.model_api.invoke(
             model="text_embedding",
             prompt=content
         )
-        embedding_list.append(response['data']['embedding'])
-        print(len(embedding_list))
+        if 'data' in response:
+            embedding_list.append(response['data']['embedding'])
+            print(len(embedding_list))
     tuple_list = []
     index = pineconeStorage.Index(PINECONE_INDEX_NAME)
     print(len(embedding_list[0]))
