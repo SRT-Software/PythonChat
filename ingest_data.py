@@ -10,6 +10,9 @@ filePath = 'docs'
 zhipuai.api_key = CHATGLM_KEY
 
 
+def split_list(long_list, chunk_size):
+    return [long_list[i:i + chunk_size] for i in range(0, len(long_list), chunk_size)]
+
 
 def initPinecone():
     try:
@@ -52,7 +55,9 @@ def ingest():
             'metadata': metadata
         }
         tuple_list.append(d)
-    index.upsert(tuple_list)
+    short_lists = split_list(tuple_list, 200)
+    for list in short_lists:
+        index.upsert(list)
     return index
 
 

@@ -7,6 +7,7 @@ def hello():
     with st.chat_message("assistant"):
         st.write("Hello 👋")
 
+
 def chat():
     if "messages" not in st.session_state:
         st.session_state.messages = []
@@ -28,12 +29,13 @@ def chat():
             response, sources, texts = chatbot(prompt)
             for event in response.events():
                 full_response += event.data
-                message_placeholder.markdown(full_response + "▌")
+                message_placeholder.markdown(full_response + " ")
             message_placeholder.markdown(full_response)
-            for i in range(len(sources)):
-                with st.expander(sources[i]):
-                    st.markdown(texts[i])
             st.session_state.messages.append({"role": "assistant", "content": full_response})
+            for i in range(len(sources)):
+                expander_text = 'file: {}, page: {}'.format(sources[i][0], int(sources[i][1]))
+                with st.expander(expander_text):
+                    st.markdown(texts[i])
 
 
 if __name__ == '__main__':

@@ -5,8 +5,7 @@ import json
 QA_TEMPLATE = 'You are a helpful AI assistant. Use the following pieces of context to answer the question at the end.' \
               'If you do not know the answer, just say you do not know. DO NOT try to make up an answer.If the ' \
               'question is not related to the context, politely respond that you are tuned to only answer questions ' \
-              'that are related to the context.' \
-              '{}' \
+              'that are related to the context.{}' \
               'Question: {}' \
               'Helpful answer in markdown:'
 
@@ -15,7 +14,7 @@ def chatbot(ques):
     print(ques)
     query = match_query(ques)
     text_list = [text['metadata']['text'] for text in query['matches']]
-    source_list = [text['metadata']['source'] for text in query['matches']]
+    source_list = [(text['metadata']['source'], text['metadata']['page']) for text in query['matches']]
     response = zhipuai.model_api.sse_invoke(
         model="chatglm_pro",
         prompt=[
