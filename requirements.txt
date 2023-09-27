@@ -1,4 +1,7 @@
-streamlit==1.26.0
-zhipuai==1.0.7
-langchain==0.0.295
-pinecone-client==2.2.4
+streamlit>=1.26.0
+zhipuai>=1.0.7
+langchain>=0.0.295
+pinecone-client>=2.2.4
+python-dotenv>=1.0.0
+modelscope
+python-dotenv>=1.0.0
