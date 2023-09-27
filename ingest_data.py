@@ -26,7 +26,7 @@ def ingest():
     pineconeStorage = initPinecone()
     directoryLoader = DirectoryLoader('docs', glob='*.pdf', loader_cls=PyPDFLoader)
     rawDocs = directoryLoader.load()
-    textSplitter = RecursiveCharacterTextSplitter(chunk_size=200, chunk_overlap=100)
+    textSplitter = RecursiveCharacterTextSplitter(chunk_size=200, chunk_overlap=150)
     docs = textSplitter.split_documents(rawDocs)
     content_list = [chunk.page_content for chunk in docs]
     print(len(content_list))
@@ -59,8 +59,6 @@ def ingest():
     for list in short_lists:
         index.upsert(list)
     return index
-
-
 
 
 if __name__ == '__main__':
