@@ -1,6 +1,8 @@
 from langchain.text_splitter import CharacterTextSplitter
 import re
 from modelscope.pipelines import pipeline
+from typing import (Iterable, List)
+from langchain.docstore.document import Document
 
 
 class SemanticTextSplitter(CharacterTextSplitter):
@@ -24,3 +26,11 @@ class SemanticTextSplitter(CharacterTextSplitter):
         result = p(documents=text)
         sent_list = [i for i in result["text"].split("\n\t") if i]
         return sent_list
+
+    def split_documents(self, documents: Iterable[Document]) -> List[Document]:
+        """Split documents."""
+        texts, metadatas = [], []
+        for doc in documents:
+            texts.append(doc.page_content)
+            metadatas.append(doc.metadata)
+        return self.create_documents(texts, metadatas=metadatas)

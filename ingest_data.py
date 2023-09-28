@@ -5,6 +5,8 @@ from prepare import PINECONE_ENVIRONMENT, PINECONE_API_KEY, PINECONE_INDEX_NAME,
 import pinecone
 from langchain.document_loaders import DirectoryLoader, PyPDFLoader
 import zhipuai
+from text_splitter.semantic_segmentation import SemanticTextSplitter
+from text_splitter.pdf_loader import RapidOCRPDFLoader
 
 filePath = 'docs'
 zhipuai.api_key = CHATGLM_KEY
@@ -24,9 +26,12 @@ def initPinecone():
 
 def ingest():
     pineconeStorage = initPinecone()
-    directoryLoader = DirectoryLoader('docs', glob='*.pdf', loader_cls=PyPDFLoader)
+
+    directoryLoader = DirectoryLoader('docs', glob='*.pdf', loader_cls=RapidOCRPDFLoader)
     rawDocs = directoryLoader.load()
-    textSplitter = RecursiveCharacterTextSplitter(chunk_size=200, chunk_overlap=150)
+    # splitter = RecursiveCharacterTextSplitter(chunk_size=200, chunk_overlap=150)
+    # s = splitter.split_documents(rawDocs)
+    textSplitter = SemanticTextSplitter()
     docs = textSplitter.split_documents(rawDocs)
     content_list = [chunk.page_content for chunk in docs]
     print(len(content_list))
