@@ -31,6 +31,9 @@ class SemanticTextSplitter(CharacterTextSplitter):
         """Split documents."""
         texts, metadatas = [], []
         for doc in documents:
-            texts.append(doc.page_content)
-            metadatas.append(doc.metadata)
+            text_list = self.split_text(doc.page_content)
+            for txt in text_list:
+                texts.append(txt)
+            for i in range(len(text_list)):
+                metadatas.append(doc.metadata)
         return self.create_documents(texts, metadatas=metadatas)
