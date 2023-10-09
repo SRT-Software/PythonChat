@@ -46,6 +46,6 @@ class SemanticTextSplitter(CharacterTextSplitter, ABC):
 
         documents = []
         for i in range(len(texts)):
-            doc = Document(chunk=texts[i], metadatas=metadatas[i])
+            doc = Document(page_content=texts[i], metadatas=metadatas[i])
             documents.append(doc)
         return documents
