@@ -1,3 +1,5 @@
+from abc import ABC
+
 from langchain.text_splitter import CharacterTextSplitter
 import re
 from modelscope.pipelines import pipeline
@@ -5,7 +7,7 @@ from typing import (Iterable, List)
 from langchain.docstore.document import Document
 
 
-class SemanticTextSplitter(CharacterTextSplitter):
+class SemanticTextSplitter(CharacterTextSplitter, ABC):
     def __init__(self, pdf: bool = False, **kwargs):
         super().__init__(**kwargs)
         self.pdf = pdf
@@ -19,6 +21,7 @@ class SemanticTextSplitter(CharacterTextSplitter):
             text = re.sub('\s', " ", text)
             text = re.sub("\n\n", "", text)
 
+        print('text:\n', text)
         p = pipeline(
             task="document-segmentation",
             model='damo/nlp_bert_document-segmentation_chinese-base',

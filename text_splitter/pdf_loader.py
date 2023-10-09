@@ -1,12 +1,11 @@
 from typing import List
 from langchain.document_loaders.unstructured import UnstructuredFileLoader
 import tqdm  # 进度条
-
+import fitz  # pyMuPDF里面的fitz包，不要与pip install fitz混淆
 
 class RapidOCRPDFLoader(UnstructuredFileLoader):
     def _get_elements(self) -> List:
         def pdf2text(filepath):
-            import fitz  # pyMuPDF里面的fitz包，不要与pip install fitz混淆
             from rapidocr_onnxruntime import RapidOCR  # 光学识别 读取图片上的文字
             import numpy as np
             ocr = RapidOCR()
