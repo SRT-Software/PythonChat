@@ -38,18 +38,15 @@ class SemanticTextSplitter(CharacterTextSplitter, ABC):
         for doc in documents:
             print('index', index)
             index += 1
-            print(doc)
             text_list = self.split_text(doc.page_content)
             for txt in text_list:
                 texts.append(txt)
             for i in range(len(text_list)):
                 d = dict(doc.metadata)
-                print(d, ' ', len(text_list))
                 metadatas.append(d)
-                print(metadatas)
 
         documents = []
         for i in range(len(texts)):
-            doc = Document(page_content=texts[i], metadatas=metadatas[i])
+            doc = Document(page_content=texts[i], metadata=metadatas[i])
             documents.append(doc)
         return documents
