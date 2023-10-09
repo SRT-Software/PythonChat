@@ -32,7 +32,8 @@ class SemanticTextSplitter(CharacterTextSplitter, ABC):
 
     def split_documents(self, documents: Iterable[Document]) -> List[Document]:
         """Split documents."""
-        texts, metadatas = [], []
+        texts = []
+        metadatas = []
         index = 0
         for doc in documents:
             print('index', index)
@@ -41,9 +42,9 @@ class SemanticTextSplitter(CharacterTextSplitter, ABC):
             text_list = self.split_text(doc.page_content)
             for txt in text_list:
                 texts.append(txt)
+            d = doc.metadata
             for i in range(len(text_list)):
-                print(doc.metadata)
-                metadatas.append(doc.metadata)
+                metadatas.append(d)
 
         documents = []
         for i in range(len(texts)):
