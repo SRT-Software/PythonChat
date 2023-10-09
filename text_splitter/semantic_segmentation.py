@@ -22,6 +22,8 @@ class SemanticTextSplitter(CharacterTextSplitter, ABC):
             text = re.sub("\n\n", "", text)
 
         print('text:\n', text)
+        text = '如果使用模型进行文档语义切分，那么需要安装modelscope[nlp]：pip install "modelscope[nlp]" -f https://modelscope.oss-cn-beijing.aliyuncs.com/releases/repo.html' \
+               '考虑到使用了三个模型，可能对于低配置gpu不太友好，因此这里将模型load进cpu计算，有需要的话可以替换device为自己的显卡id'
         p = pipeline(
             task="document-segmentation",
             model='damo/nlp_bert_document-segmentation_chinese-base',

@@ -31,7 +31,6 @@ def ingest():
     rawDocs = directoryLoader.load()
     # splitter = RecursiveCharacterTextSplitter(chunk_size=200, chunk_overlap=150)
     # s = splitter.split_documents(rawDocs)
-    print(rawDocs)
     textSplitter = SemanticTextSplitter(pdf=True)
     docs = textSplitter.split_documents(rawDocs)
     content_list = [chunk.page_content for chunk in docs]
