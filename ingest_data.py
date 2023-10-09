@@ -28,11 +28,11 @@ def ingest():
     pineconeStorage = initPinecone()
 
     directoryLoader = DirectoryLoader('docs', glob='*.pdf', loader_cls=PyPDFLoader)
-    d = directoryLoader.load()
-    print(len(d))
-    rawDocs = []
-    for i in range(3):
-        rawDocs.append(d[i+10])
+    rawDocs = directoryLoader.load()
+    # print(len(d))
+    # rawDocs = []
+    # for i in range(3):
+    #     rawDocs.append(d[i+10])
     # splitter = RecursiveCharacterTextSplitter(chunk_size=200, chunk_overlap=150)
     # s = splitter.split_documents(rawDocs)
     textSplitter = SemanticTextSplitter(pdf=True)
