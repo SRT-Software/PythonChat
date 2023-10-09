@@ -35,6 +35,7 @@ def ingest():
     docs = textSplitter.split_documents(rawDocs)
     content_list = [chunk.page_content for chunk in docs]
     print('content', len(content_list))
+    print(content_list)
     embedding_list = []
     for content in content_list:
         response = zhipuai.model_api.invoke(

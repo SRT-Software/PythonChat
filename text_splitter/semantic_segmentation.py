@@ -21,9 +21,8 @@ class SemanticTextSplitter(CharacterTextSplitter, ABC):
             text = re.sub('\s', " ", text)
             text = re.sub("\n\n", "", text)
 
+        text = '2020年，钱鹤、吴华强团队基于多阵列忆阻器，搭建了一个全硬件构成的完整存算一体系统，在这个系统上高效运行了卷积神经网络算法，成功验证了图像识别功能，比图形处理器芯片的能效高两个数量级，大幅提升了计算设备的算力，实现了以更小的功耗和更低的硬件成本完成复杂的计算。存算一体架构，就如同“在家办公”的新型工作模式，彻底消除了往返通勤的能量消耗，避免了往返通勤带来的时间延迟，还大大节约了办公场所的运营成本，在边缘计算和云计算中有广泛的应用前景。'
         print('text:\n', text)
-        text = '如果使用模型进行文档语义切分，那么需要安装modelscope[nlp]：pip install "modelscope[nlp]" -f https://modelscope.oss-cn-beijing.aliyuncs.com/releases/repo.html' \
-               '考虑到使用了三个模型，可能对于低配置gpu不太友好，因此这里将模型load进cpu计算，有需要的话可以替换device为自己的显卡id'
         p = pipeline(
             task="document-segmentation",
             model='damo/nlp_bert_document-segmentation_chinese-base',
