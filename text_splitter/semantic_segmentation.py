@@ -42,6 +42,7 @@ class SemanticTextSplitter(CharacterTextSplitter, ABC):
             for txt in text_list:
                 texts.append(txt)
             for i in range(len(text_list)):
+                print(doc.metadata)
                 metadatas.append(doc.metadata)
 
         documents = []
