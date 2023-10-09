@@ -43,6 +43,7 @@ class SemanticTextSplitter(CharacterTextSplitter, ABC):
             for txt in text_list:
                 texts.append(txt)
             d = doc.metadata
+            print(d, ' ', len(text_list))
             for i in range(len(text_list)):
                 metadatas.append(d)
 
