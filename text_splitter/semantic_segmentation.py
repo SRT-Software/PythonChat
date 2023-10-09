@@ -43,4 +43,9 @@ class SemanticTextSplitter(CharacterTextSplitter, ABC):
                 texts.append(txt)
             for i in range(len(text_list)):
                 metadatas.append(doc.metadata)
-        return self.create_documents(texts, metadatas=metadatas)
+
+        documents = []
+        for i in range(len(texts)):
+            doc = Document(chunk=texts[i], metadatas=metadatas[i])
+            documents.append(doc)
+        return documents

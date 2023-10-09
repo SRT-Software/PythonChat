@@ -34,6 +34,7 @@ def ingest():
     # s = splitter.split_documents(rawDocs)
     textSplitter = SemanticTextSplitter(pdf=True)
     docs = textSplitter.split_documents(rawDocs)
+    print('docs:\n', docs)
     content_list = [chunk.page_content for chunk in docs]
     print('content', len(content_list))
     print(content_list)
