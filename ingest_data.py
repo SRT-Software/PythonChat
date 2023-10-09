@@ -27,7 +27,7 @@ def initPinecone():
 def ingest():
     pineconeStorage = initPinecone()
 
-    directoryLoader = DirectoryLoader('docs', glob='*.pdf', loader_cls=RapidOCRPDFLoader)
+    directoryLoader = DirectoryLoader('docs', glob='*.pdf', loader_cls=PyPDFLoader)
     rawDocs = directoryLoader.load()
     # splitter = RecursiveCharacterTextSplitter(chunk_size=200, chunk_overlap=150)
     # s = splitter.split_documents(rawDocs)
