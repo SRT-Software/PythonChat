@@ -22,7 +22,6 @@ class SemanticTextSplitter(CharacterTextSplitter, ABC):
             text = re.sub("\n\n", "", text)
 
         #text = '2020年，钱鹤、吴华强团队基于多阵列忆阻器，搭建了一个全硬件构成的完整存算一体系统，在这个系统上高效运行了卷积神经网络算法，成功验证了图像识别功能，比图形处理器芯片的能效高两个数量级，大幅提升了计算设备的算力，实现了以更小的功耗和更低的硬件成本完成复杂的计算。存算一体架构，就如同“在家办公”的新型工作模式，彻底消除了往返通勤的能量消耗，避免了往返通勤带来的时间延迟，还大大节约了办公场所的运营成本，在边缘计算和云计算中有广泛的应用前景。'
-        print('text:\n', text)
         p = pipeline(
             task="document-segmentation",
             model='damo/nlp_bert_document-segmentation_chinese-base',
@@ -38,6 +37,7 @@ class SemanticTextSplitter(CharacterTextSplitter, ABC):
         for doc in documents:
             print('index', index)
             index += 1
+            print(doc)
             text_list = self.split_text(doc.page_content)
             for txt in text_list:
                 texts.append(txt)
