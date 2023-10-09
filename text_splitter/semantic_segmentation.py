@@ -42,10 +42,11 @@ class SemanticTextSplitter(CharacterTextSplitter, ABC):
             text_list = self.split_text(doc.page_content)
             for txt in text_list:
                 texts.append(txt)
-            d = doc.metadata
-            print(d, ' ', len(text_list))
             for i in range(len(text_list)):
+                d = dict(doc.metadata)
+                print(d, ' ', len(text_list))
                 metadatas.append(d)
+                print(metadatas)
 
         documents = []
         for i in range(len(texts)):
