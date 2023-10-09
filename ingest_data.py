@@ -29,6 +29,7 @@ def ingest():
 
     directoryLoader = DirectoryLoader('docs', glob='*.pdf', loader_cls=PyPDFLoader)
     rawDocs = directoryLoader.load()
+    print(len(rawDocs))
     # splitter = RecursiveCharacterTextSplitter(chunk_size=200, chunk_overlap=150)
     # s = splitter.split_documents(rawDocs)
     textSplitter = SemanticTextSplitter(pdf=True)
