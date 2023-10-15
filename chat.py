@@ -12,9 +12,7 @@ QA_TEMPLATE = 'You are a helpful AI assistant. Use the following pieces of conte
 
 def chatbot(ques):
     print(ques)
-    query = match_query(ques)
-    text_list = [text['metadata']['text'] for text in query['matches']]
-    source_list = [(text['metadata']['source'], text['metadata']['page']) for text in query['matches']]
+    text_list, source_list = match_query(ques)  
     response = zhipuai.model_api.sse_invoke(
         model="chatglm_pro",
         prompt=[
