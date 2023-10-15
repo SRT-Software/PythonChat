@@ -62,7 +62,7 @@ def initMilvus():
 def getDocs(model="normal"):
     directoryLoader = DirectoryLoader('docs', glob='*.pdf', loader_cls=PyPDFLoader)
     rawDocs = directoryLoader.load()
-    rawDocs = rawDocs[10:20]
+    # rawDocs = rawDocs[10:20]
     if model == "normal":
         textSplitter = RecursiveCharacterTextSplitter(chunk_size=150, chunk_overlap=100)
     # print(len(d))
