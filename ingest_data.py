@@ -24,7 +24,7 @@ import json
 filePath = 'docs'
 zhipuai.api_key = CHATGLM_KEY
 
-milvus_collection_name = "pdf milvus"
+milvus_collection_name = "pdf_milvus"
 
 
 def split_list(long_list, chunk_size):
