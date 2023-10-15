@@ -49,7 +49,7 @@ def initMilvus():
         fields = [
             FieldSchema(name="index", dtype=DataType.INT64, is_primary=True, auto_id=False),
             FieldSchema(name="embeddings", dtype=DataType.FLOAT_VECTOR, dim=vec_dim),
-            FieldSchema(name="metadata", dtype=DataType.JSON)
+            FieldSchema(name="metadata", dtype=DataType.VARCHAR)
         ]
         schema = CollectionSchema(fields, milvus_collection_name)
         pdf_milvus = Collection(milvus_collection_name, schema)
