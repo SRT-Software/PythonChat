@@ -7,13 +7,24 @@ from langchain.document_loaders import DirectoryLoader, PyPDFLoader
 import zhipuai
 from text_splitter.semantic_segmentation import SemanticTextSplitter
 from text_splitter.pdf_loader import RapidOCRPDFLoader
-from milvus import Milvus, IndexType, MetricType
+from pymilvus import (
+    connections,
+    utility,
+    FieldSchema,
+    CollectionSchema,
+    DataType,
+    Collection,
+)
+  
 import numpy as np
+import json
 
 
 
 filePath = 'docs'
 zhipuai.api_key = CHATGLM_KEY
+
+milvus_collection_name = "pdf milvus"
 
 
 def split_list(long_list, chunk_size):
@@ -28,25 +39,23 @@ def initPinecone():
         print(Exception)
 
 def initMilvus():
-    milvus = Milvus()
-    milvus.connect(host='localhost', port='19530')
-    collection = milvus.get_collection_by_name('pdf_collection')
-    if collection is None:
+    connections.connect("default", host="localhost", port="19530")
+    if not utility.has_collection(milvus_collection_name):
         # 向量个数
         num_vec = 10000
         # 向量维度
         vec_dim = 1024
         # metric_type: 向量相似度度量标准, MetricType.IP是向量内积; MetricType.L2是欧式距离
-        collection_param = {
-            'collection_name': 'pdf_collection', 
-            'dimension':vec_dim, 
-            'index_file_size':1024, 
-            'metric_type':MetricType.IP
-        }
-        milvus.create_collection(collection_param)  
-        return milvus
+        fields = [
+            FieldSchema(name="index", dtype=DataType.INT64, is_primary=True, auto_id=False),
+            FieldSchema(name="embeddings", dtype=DataType.FLOAT_VECTOR, dim=vec_dim),
+            FieldSchema(name="metadata", dtype=DataType.JSON)
+        ]
+        schema = CollectionSchema(fields, milvus_collection_name)
+        pdf_milvus = Collection(milvus_collection_name, schema)
     else:
-        return milvus
+        pdf_milvus = Collection(milvus_collection_name)
+        return pdf_milvus
 
 def getDocs(model="normal"):
     directoryLoader = DirectoryLoader('docs', glob='*.pdf', loader_cls=PyPDFLoader)
@@ -84,7 +93,6 @@ def ingest(database="pinecone"):
             embedding_list.append(response['data']['embedding'])
             print(len(embedding_list))
     tuple_list = []
-    index = pineconeStorage.Index(PINECONE_INDEX_NAME)
     print(len(embedding_list[0]))
     print(docs[0])
     metadatas = []
@@ -107,41 +115,38 @@ def ingest(database="pinecone"):
 
     if database == "pinecone":
         pineconeStorage = initPinecone()
-      
+        index = pineconeStorage.Index(PINECONE_INDEX_NAME)
         for list in short_lists:
             index.upsert(list)
     elif database == "milvus":  
         milvus = initMilvus()
         # 把向量添加到刚才建立的表格中
         # ids可以为None，使用自动生成的id
-        # 转化为numpy vector
-        vectors_np = np.array(embedding_list, dtype=np.float64)
-        status, ids = milvus.insert(collection_name="pdf_collection",
-                                    records=vectors_np,ids=None,
-                                    extra_params=metadatas) # 返回这一组向量的ID
+        json_list = [json.dumps(item) for item in metadatas]
+        entities = [
+          [i for i in range(len(embedding_list))],  # field index
+          [embedding_list], # field embeddings
+          [json_list],  # field metadata
+        ]
         
         # 确保插入操作成功
-        if status.OK():
-            print('Vectors inserted successfully.')
-        else:
-            print('Error occurred while inserting vectors:', status)
+        insert_result = milvus.insert(entities)
+        # After final entity is inserted, it is best to call flush to have no growing segments left in memory
+        milvus.flush() 
         
 
         # 构建索引
-        index_param = {
-            'nlist': 10,  # 索引聚类中心的数量
-            'index_type': IndexType.IVF_FLAT  # 索引类型（这里使用 IVF_FLAT 索引）
+        index = {
+          "index_type": "IVF_FLAT",
+          "metric_type": "L2",
+          "params": {"nlist": 128},
         }
-
-        status = milvus.create_index('pdf_collection', index_param)
-        if status.OK():
-            print('Index created successfully.')
-        else:
-            print('Error occurred while creating index:', status)
+        milvus.create_index("embeddings", index)
 
 
 
 
 
 if __name__ == '__main__':
-    ingest(database="milvus")
+    connections.connect("default", host="localhost", port="19530")
+    # ingest(database="milvus")
