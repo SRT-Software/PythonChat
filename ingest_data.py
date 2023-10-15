@@ -53,6 +53,7 @@ def initMilvus():
         ]
         schema = CollectionSchema(fields, milvus_collection_name)
         pdf_milvus = Collection(milvus_collection_name, schema)
+        return pdf_milvus
     else:
         pdf_milvus = Collection(milvus_collection_name)
         return pdf_milvus
