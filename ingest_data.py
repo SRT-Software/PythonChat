@@ -15,11 +15,9 @@ from pymilvus import (
     DataType,
     Collection,
 )
-  
+
 import numpy as np
 import json
-
-
 
 filePath = 'docs'
 zhipuai.api_key = CHATGLM_KEY
@@ -38,6 +36,7 @@ def initPinecone():
     except Exception:
         print(Exception)
 
+
 def initMilvus():
     connections.connect("default", host="localhost", port="19530")
     if not utility.has_collection(milvus_collection_name):
@@ -51,7 +50,7 @@ def initMilvus():
             FieldSchema(name="embeddings", dtype=DataType.FLOAT_VECTOR, dim=vec_dim),
             FieldSchema(name="metadata", dtype=DataType.VARCHAR)
         ]
-        
+
         schema = CollectionSchema(fields, milvus_collection_name)
         pdf_milvus = Collection(milvus_collection_name, schema)
         return pdf_milvus
@@ -59,11 +58,13 @@ def initMilvus():
         pdf_milvus = Collection(milvus_collection_name)
         return pdf_milvus
 
+
 def getDocs(model="normal"):
     directoryLoader = DirectoryLoader('docs', glob='*.pdf', loader_cls=PyPDFLoader)
     rawDocs = directoryLoader.load()
+    rawDocs = rawDocs[10:20]
     if model == "normal":
-      textSplitter = RecursiveCharacterTextSplitter(chunk_size=200, chunk_overlap=150)
+        textSplitter = RecursiveCharacterTextSplitter(chunk_size=200, chunk_overlap=150)
     # print(len(d))
     # rawDocs = []
     # for i in range(3):
@@ -113,40 +114,35 @@ def ingest(database="pinecone"):
         metadatas.append(metadata)
     # 截短 防止太长一次不能插入
     short_lists = split_list(tuple_list, 200)
-        
 
     if database == "pinecone":
         pineconeStorage = initPinecone()
         index = pineconeStorage.Index(PINECONE_INDEX_NAME)
         for list in short_lists:
             index.upsert(list)
-    elif database == "milvus":  
+    elif database == "milvus":
         milvus = initMilvus()
         # 把向量添加到刚才建立的表格中
         # ids可以为None，使用自动生成的id
         json_list = [json.dumps(item) for item in metadatas]
         entities = [
-          [i for i in range(len(embedding_list))],  # field index
-          embedding_list, # field embeddings
-          json_list,  # field metadata
+            [i for i in range(len(embedding_list))],  # field index
+            embedding_list,  # field embeddings
+            json_list,  # field metadata
         ]
-        
+
         # 确保插入操作成功
         insert_result = milvus.insert(entities)
         # After final entity is inserted, it is best to call flush to have no growing segments left in memory
-        milvus.flush() 
-        
+        milvus.flush()
 
         # 构建索引
         index = {
-          "index_type": "IVF_FLAT",
-          "metric_type": "L2",
-          "params": {"nlist": 128},
+            "index_type": "IVF_FLAT",
+            "metric_type": "L2",
+            "params": {"nlist": 128},
         }
         milvus.create_index("embeddings", index)
-
-
-
 
 
 if __name__ == '__main__':
