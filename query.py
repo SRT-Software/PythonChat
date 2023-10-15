@@ -38,7 +38,7 @@ def match_query(ques, database="pinecone"):
             "params": {"nprobe": 10},
         }
 
-        results = milvus.search([vectors_to_search], "embeddings", search_params, limit=5 ,output_fields=["metadate"])
+        results = milvus.search([vectors_to_search], "embeddings", search_params, limit=5 ,output_fields=["metadata"])
         for result in results[0]:
             print('Vector ID:', result.id, ' Distance:', result.distance)
             metadata = result.entity
