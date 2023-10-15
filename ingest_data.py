@@ -51,6 +51,7 @@ def initMilvus():
             FieldSchema(name="embeddings", dtype=DataType.FLOAT_VECTOR, dim=vec_dim),
             FieldSchema(name="metadata", dtype=DataType.VARCHAR)
         ]
+        
         schema = CollectionSchema(fields, milvus_collection_name)
         pdf_milvus = Collection(milvus_collection_name, schema)
         return pdf_milvus
