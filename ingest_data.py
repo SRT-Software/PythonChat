@@ -48,7 +48,7 @@ def initMilvus():
         fields = [
             FieldSchema(name="index", dtype=DataType.INT64, is_primary=True, auto_id=False),
             FieldSchema(name="embeddings", dtype=DataType.FLOAT_VECTOR, dim=vec_dim),
-            FieldSchema(name="metadata", dtype=DataType.VARCHAR, max_length=2048)
+            FieldSchema(name="metadata", dtype=DataType.VARCHAR, max_length=1024)
         ]
 
         schema = CollectionSchema(fields, milvus_collection_name)
@@ -124,7 +124,9 @@ def ingest(database="pinecone"):
         milvus = initMilvus()
         # 把向量添加到刚才建立的表格中
         # ids可以为None，使用自动生成的id
-        json_list = [json.dumps(item) for item in metadatas]
+        json_list = [json.dumps(item)for item in metadatas]
+        for jsons in json_list:
+            print(len(jsons))
         entities = [
             [i for i in range(len(embedding_list))],  # field index
             embedding_list,  # field embeddings
