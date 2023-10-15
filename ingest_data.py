@@ -148,5 +148,5 @@ def ingest(database="pinecone"):
 
 
 if __name__ == '__main__':
-    connections.connect("default", host="localhost", port="19530")
-    # ingest(database="milvus")
+    # connections.connect("default", host="localhost", port="19530")
+    ingest(database="milvus")
