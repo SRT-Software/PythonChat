@@ -126,8 +126,8 @@ def ingest(database="pinecone"):
         json_list = [json.dumps(item) for item in metadatas]
         entities = [
           [i for i in range(len(embedding_list))],  # field index
-          [embedding_list], # field embeddings
-          [json_list],  # field metadata
+          embedding_list, # field embeddings
+          json_list,  # field metadata
         ]
         
         # 确保插入操作成功
