@@ -1,3 +1,5 @@
+import json
+
 import zhipuai
 from ingest_data import initPinecone, initMilvus
 from prepare import PINECONE_ENVIRONMENT, PINECONE_API_KEY, PINECONE_INDEX_NAME, CHATGLM_KEY
@@ -41,10 +43,10 @@ def match_query(ques, database="pinecone"):
         results = milvus.search([vectors_to_search], "embeddings", search_params, limit=5 ,output_fields=["metadata"])
         for result in results[0]:
             print('Vector ID:', result.id, ' Distance:', result.distance)
-            metadata = result.entity
-            print(metadata)
-            # text_list.append(metadata['text'])
-            # source_list.append((metadata['source'], metadata['page']))
+            metadata = json.load(result.entity)
+            print(type(metadata), ' ', metadata)
+            text_list.append(metadata['text'])
+            source_list.append((metadata['source'], metadata['page']))
         return text_list, source_list
     
         # # 确保搜索操作成功
