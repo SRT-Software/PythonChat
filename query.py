@@ -41,10 +41,10 @@ def match_query(ques, database="pinecone"):
         results = milvus.search([vectors_to_search], "embeddings", search_params, limit=5)
         for result in results[0]:
             print('Vector ID:', result.id, ' Distance:', result.distance)
-            metadata = results[0][0]
+            metadata = result.entity
             print(metadata)
-            text_list.append(metadata['text'])
-            source_list.append((metadata['source'], metadata['page']))
+            # text_list.append(metadata['text'])
+            # source_list.append((metadata['source'], metadata['page']))
         return text_list, source_list
     
         # # 确保搜索操作成功
