@@ -9,6 +9,18 @@ class LogState(Enum):
     Logout = 1
 
 
+def change_web(attrs1, attrs2):
+    if attrs1 == attrs2:
+        st.success("登录成功！")
+        st.session_state.log_state = LogState.Login.value
+        chat_web()
+    else:
+        login_web()
+        st.error("用户名或密码错误")
+        st.session_state.log_state = LogState.Logout.value
+        
+
+
 def login_web():
     st.title("用户登录")
     # 输入用户名和密码
@@ -18,13 +30,12 @@ def login_web():
     # 登录按钮
     attrs1 = vars(user)
     attrs2 = vars(default_user)
-    if st.button("登录"):
-        if attrs1 == attrs2:
-            st.success("登录成功！")
-            st.session_state.log_state = LogState.Login.value
-        else:
-            st.error("用户名或密码错误")
-            st.session_state.log_state = LogState.Logout.value
+    st.button("登录", on_click=change_web, args=(attrs1, attrs2))
+
+
+def chat_web():
+    hello()
+    chat()
 
 
 def hello():
