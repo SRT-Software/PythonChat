@@ -8,9 +8,7 @@ def change_web(attrs1, attrs2):
     if attrs1 == attrs2:
         st.success("登录成功！")
         st.session_state['index'] = 1
-        chat_web()
     else:
-        login_web()
         st.error("用户名或密码错误")
         st.session_state['index'] = 0
 
