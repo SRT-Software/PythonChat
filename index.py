@@ -16,8 +16,10 @@ def login_web():
     password = st.text_input("密码", type="password")
     user = User(name=username, password=password)
     # 登录按钮
+    attrs1 = vars(user)
+    attrs2 = vars(default_user)
     if st.button("登录"):
-        if user == default_user:
+        if attrs1 == attrs2:
             st.success("登录成功！")
             st.session_state.log_state = LogState.Login.value
         else:
