@@ -64,7 +64,7 @@ def getDocs(model="normal"):
     rawDocs = directoryLoader.load()
     # rawDocs = rawDocs[10:20]
     if model == "normal":
-        textSplitter = RecursiveCharacterTextSplitter(chunk_size=150, chunk_overlap=100)
+        textSplitter = RecursiveCharacterTextSplitter(chunk_size=120, chunk_overlap=80)
     # print(len(d))
     # rawDocs = []
     # for i in range(3):
@@ -127,8 +127,6 @@ def ingest(database="pinecone"):
         json_list = []
         for item in metadatas:
             json_str = json.dumps(item)
-            if len(json_str) >= 1024:
-                json_str = json_str[:1024 - 1]
             json_list.append(json_str)
         entities = [
             [i for i in range(len(embedding_list))],  # field index
