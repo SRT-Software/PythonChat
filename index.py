@@ -5,8 +5,8 @@ from config.User import User, default_user
 
 
 class LogState(Enum):
-    Login = 1
-    Logout = 2
+    Login = 0
+    Logout = 1
 
 
 def login_web():
@@ -19,10 +19,10 @@ def login_web():
     if st.button("登录"):
         if user == default_user:
             st.success("登录成功！")
-            st.session_state.log_state = LogState.Login
+            st.session_state.log_state = LogState.Login.value
         else:
             st.error("用户名或密码错误")
-            st.session_state.log_state = LogState.Logout
+            st.session_state.log_state = LogState.Logout.value
 
 
 def hello():
@@ -62,11 +62,13 @@ def chat():
 
 if __name__ == '__main__':
     if "log_state" not in st.session_state:
-        st.session_state.log_state = LogState.Logout
-    if st.session_state.log_state == LogState.Logout:
+        st.session_state.log_state = LogState.Logout.value
+    if st.session_state.log_state == LogState.Logout.value:
+        print('log in')
         login_web()
 
-    if st.session_state.log_state == LogState.Login:
+    if st.session_state.log_state == LogState.Login.value:
+        print('chat')
         hello()
         chat()
 
