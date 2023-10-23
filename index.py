@@ -1,6 +1,28 @@
 import streamlit as st
 from chat import chatbot
-import time
+from enum import Enum
+from config.User import User, default_user
+
+
+class LogState(Enum):
+    Login = 1
+    Logout = 2
+
+
+def login_web():
+    st.title("用户登录")
+    # 输入用户名和密码
+    username = st.text_input("用户名")
+    password = st.text_input("密码", type="password")
+    user = User(name=username, password=password)
+    # 登录按钮
+    if st.button("登录"):
+        if user == default_user:
+            st.success("登录成功！")
+            st.session_state.log_state = LogState.Login
+        else:
+            st.error("用户名或密码错误")
+            st.session_state.log_state = LogState.Logout
 
 
 def hello():
@@ -39,7 +61,13 @@ def chat():
 
 
 if __name__ == '__main__':
-    hello()
-    chat()
+    if "log_state" not in st.session_state:
+        st.session_state.log_state = LogState.Logout
+    if st.session_state.log_state == LogState.Logout:
+        login_web()
+
+    if st.session_state.log_state == LogState.Login:
+        hello()
+        chat()
 
 # D:\Desktop\pythonSRT\venv\Scripts\streamlit.exe run index.py
