@@ -4,21 +4,16 @@ from enum import Enum
 from config.User import User, default_user
 
 
-class LogState(Enum):
-    Login = 0
-    Logout = 1
-
-
 def change_web(attrs1, attrs2):
     if attrs1 == attrs2:
         st.success("登录成功！")
-        st.session_state.log_state = LogState.Login.value
+        st.session_state['index'] = 1
         chat_web()
     else:
         login_web()
         st.error("用户名或密码错误")
-        st.session_state.log_state = LogState.Logout.value
-        
+        st.session_state['index'] = 0
+
 
 
 def login_web():
@@ -73,16 +68,20 @@ def chat():
                     st.markdown(texts[i])
 
 
-if __name__ == '__main__':
-    if "log_state" not in st.session_state:
-        st.session_state.log_state = LogState.Logout.value
-    if st.session_state.log_state == LogState.Logout.value:
-        print('log in')
-        login_web()
+pages_name_func = {
+    'login': login_web,
+    'chat': chat_web
+}
 
-    elif st.session_state.log_state == LogState.Login.value:
-        print('chat')
-        hello()
-        chat()
+pages_name_index = {
+    0: 'login',
+    1: 'chat',
+}
+
+if __name__ == '__main__':
+    if 'index' not in st.session_state:
+        st.session_state['index'] = 0
+    demo_name = pages_name_index[st.session_state['index']]
+    pages_name_func[demo_name]()
 
 # D:\Desktop\pythonSRT\venv\Scripts\streamlit.exe run index.py
