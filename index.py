@@ -69,7 +69,7 @@ if __name__ == '__main__':
         print('log in')
         login_web()
 
-    if st.session_state.log_state == LogState.Login.value:
+    elif st.session_state.log_state == LogState.Login.value:
         print('chat')
         hello()
         chat()
