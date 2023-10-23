@@ -124,10 +124,9 @@ def ingest(database="pinecone"):
         milvus = initMilvus()
         # 把向量添加到刚才建立的表格中
         # ids可以为None，使用自动生成的id
-        json_list = []
-        for item in metadatas:
-            json_str = json.dumps(item)
-            json_list.append(json_str)
+        json_list = [json.dumps(item)for item in metadatas]
+        for jsons in json_list:
+            print(len(jsons))
         entities = [
             [i for i in range(len(embedding_list))],  # field index
             embedding_list,  # field embeddings
