@@ -7,10 +7,10 @@ from config.User import User, default_user
 def change_web(attrs1, attrs2):
     if attrs1 == attrs2:
         st.success("登录成功！")
-        st.session_state['index'] = 1
+        st.session_state.index = 1
     else:
         st.error("用户名或密码错误")
-        st.session_state['index'] = 0
+        st.session_state.index = 0
 
 
 
@@ -23,6 +23,7 @@ def login_web():
     # 登录按钮
     attrs1 = vars(user)
     attrs2 = vars(default_user)
+    print(f"user:{username}, password:{password}")
     st.button("登录", on_click=change_web, args=(attrs1, attrs2))
 
 
@@ -78,8 +79,8 @@ pages_name_index = {
 
 if __name__ == '__main__':
     if 'index' not in st.session_state:
-        st.session_state['index'] = 0
-    demo_name = pages_name_index[st.session_state['index']]
+        st.session_state.index = 0
+    demo_name = pages_name_index[st.session_state.index]
     pages_name_func[demo_name]()
 
 # D:\Desktop\pythonSRT\venv\Scripts\streamlit.exe run index.py
