@@ -23,13 +23,7 @@ st.set_page_config(
 # # 注册用于接收来自JavaScript的POST请求的处理函数
 
 spk_button = Button(label='SPEAK', button_type='success')
-result = streamlit_bokeh_events(
-    bokeh_plot = spk_button,
-    events="GET_TEXT,GET_ONREC,GET_INTRM",
-    key="listen",
-    refresh_on_update=False,
-    override_height=75,
-    debounce_time=0)
+
 
 spk_button.js_on_event("button_click", CustomJS(code="""
     var recognition = new webkitSpeechRecognition();
@@ -53,6 +47,14 @@ spk_button.js_on_event("button_click", CustomJS(code="""
     recognition.start();
     }
 """))
+
+result = streamlit_bokeh_events(
+    bokeh_plot = spk_button,
+    events="GET_TEXT,GET_ONREC,GET_INTRM",
+    key="listen",
+    refresh_on_update=False,
+    override_height=75,
+    debounce_time=0)
 
 tr = st.empty()
 if result:
