@@ -45,7 +45,6 @@ spk_button.js_on_event("button_click", CustomJS(code="""
     document.dispatchEvent(new CustomEvent("GET_INTRM", {detail: value2}));
 
     recognition.start();
-    }
 """))
 
 result = streamlit_bokeh_events(
