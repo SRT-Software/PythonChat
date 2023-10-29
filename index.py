@@ -65,6 +65,7 @@ def chat():
                 expander_text = 'file: {}, page: {}'.format(sources[i][0], int(sources[i][1]))
                 with st.expander(expander_text):
                     st.markdown(texts[i])
+                    
 
 
 pages_name_func = {
