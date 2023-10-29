@@ -1,6 +1,7 @@
 import streamlit as st
 from bokeh.models.widgets import Button
 from bokeh.models import CustomJS
+import streamlit_bokeh_events
 st.set_page_config(
     page_title="Streamlit语音输入",
     page_icon="🎤"
