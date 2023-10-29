@@ -70,8 +70,8 @@ result = streamlit_bokeh_events(
     override_height=75,
     debounce_time=0)
 
-tr = st.empty()
-if result:
-    if "GET_INTRM" in result:
-        if result.get("GET_INTRM") != '':
-            tr.text_area("**Your input**", result.get("GET_INTRM"))
+# tr = st.empty()
+# if result:
+#     if "GET_INTRM" in result:
+#         if result.get("GET_INTRM") != '':
+#             tr.text_area("**Your input**", result.get("GET_INTRM"))
