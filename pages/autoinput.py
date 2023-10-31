@@ -13,9 +13,9 @@ button = Button(label="开始语音输入",button_type ='success')
 button.js_on_event("button_click", CustomJS(code="""
     console.log("js_on_event");
     var recognition = new webkitSpeechRecognition();
-    recognition.continuous = false;
+    recognition.continuous = true;
     recognition.interimResults = true;
-    recognition.lang = 'en';
+    recognition.lang = 'zh';
     recognition.onresult = function(e){
         var value, value2 = "";
         for (var i = e.resultIndex; i < e.results.length; ++i) {
