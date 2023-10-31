@@ -1,6 +1,8 @@
 from bokeh.io import curdoc
 from bokeh.layouts import column
 from bokeh.models import TextInput, Button, CustomJS
+import streamlit as st
+import streamlit_bokeh_events
 
 # 创建一个文本框
 text_input = TextInput(value="默认文本", title="文本框标题")
