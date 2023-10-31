@@ -8,7 +8,6 @@
     <p id="result"></p>
 
     <script>
-        // DOM
         var startButton = document.getElementById("start-button");
         var resultElement = document.getElementById("result");
 
@@ -30,6 +29,14 @@
         }
 
         startButton.addEventListener("click", startSpeechInput);
+
+        function getParameterValue(parameterName) {
+            var urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get(parameterName);
+        }
+
+        var parameterValue = getParameterValue('resultElement');
+        Streamlit.setComponentValue(parameterValue);
     </script>
 </body>
 </html>
