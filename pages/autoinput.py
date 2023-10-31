@@ -11,12 +11,15 @@ button = Button(label="开始语音输入",button_type ='success')
 
 
 button.js_on_event("button_click", CustomJS(code="""
+    console.log("js_on_event")
     var recognition = new webkitSpeechRecognition();
     recognition.continuous = true;
     recognition.interimResults = true;
     recognition.start();
     recognition.onresult = function(event) {
         var result = event.results[event.results.length - 1][0].transcript;
+        console.log("result:")
+        console.log(result)
         document.dispatchEvent(new CustomEvent("GET_TEXT", {detail: {t:result, s:1}}));
     };
 """))
