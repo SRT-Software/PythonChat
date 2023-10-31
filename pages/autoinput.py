@@ -31,7 +31,6 @@ button.js_on_event("button_click", CustomJS(code="""
     }
 
     recognition.start();
-    }
 """))
 
 result = streamlit_bokeh_events(
