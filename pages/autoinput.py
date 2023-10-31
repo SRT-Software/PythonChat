@@ -11,8 +11,7 @@ st.write("点击下方按钮开始录音，并实时显示识别结果：")
 
 
 # 定义回调函数处理按钮点击事件
-def on_button_click():
-    if record_button:
+if st.button("audio"):
         # 使用麦克风进行语音输入
         with sr.Microphone() as source:
             st.write("开始录音...")
@@ -26,9 +25,5 @@ def on_button_click():
                 st.write("无法识别语音")
             except sr.RequestError as e:
                 st.write("请求出错：", str(e))
-
-# 创建一个按钮来控制录音的开始和停止
-record_button = st.button("开始录音", onclicked=on_button_click)
-
 # 创建一个文本框用于显示识别结果
 result_text = st.empty()
