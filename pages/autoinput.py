@@ -22,6 +22,9 @@ button.js_on_event(ButtonClick, CustomJS(code="""
         console.log(result)
         document.dispatchEvent(new CustomEvent("GET_TEXT", {detail: {t:result, s:1}}));
     };
+    recognition.onerror = function(event){
+        console.log(event)
+    }
     recognition.start();
 """))
 
