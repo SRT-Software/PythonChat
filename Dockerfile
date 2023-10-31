@@ -31,7 +31,7 @@ WORKDIR /app
 COPY . /app
 
 # 安装依赖项
-RUN pip install --no-cache-dir -r requirements.txt
+RUN pip install -r requirements.txt
 
 # 暴露 Streamlit 的默认端口
 EXPOSE 8000

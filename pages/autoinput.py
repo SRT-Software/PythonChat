@@ -47,3 +47,4 @@ if result:
     if "GET_INTRM" in result:
         if result.get("GET_INTRM") != '':
             tr.text_area("**Your input**", result.get("GET_INTRM"))
+
