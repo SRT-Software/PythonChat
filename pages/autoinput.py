@@ -1,9 +1,9 @@
 from bokeh.io import curdoc
 from bokeh.layouts import column
 from bokeh.models import TextInput, Button, CustomJS
-import streamlit as st
+
 # 创建一个文本框
-text_input = st.text_area(label="audio")
+text_input = TextInput(value="默认文本", title="文本框标题")
 
 # 创建一个按钮
 button = Button(label="开始语音输入")
