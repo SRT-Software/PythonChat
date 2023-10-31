@@ -13,6 +13,7 @@ st.write("点击下方按钮开始录音，并实时显示识别结果：")
 # 定义回调函数处理按钮点击事件
 if st.button("audio"):
         # 使用麦克风进行语音输入
+        sr.Microphone.list_microphone_names()
         with sr.Microphone(device_index=0) as source:
             st.write("开始录音...")
             r.adjust_for_ambient_noise(source)
