@@ -8,11 +8,7 @@ recognizer = sr.Recognizer()
 st.title("实时语音识别")
 st.write("点击下方按钮开始录音，并实时显示识别结果：")
 
-# 创建一个按钮来控制录音的开始和停止
-record_button = st.button("开始录音")
 
-# 创建一个文本框用于显示识别结果
-result_text = st.empty()
 
 # 定义回调函数处理按钮点击事件
 def on_button_click():
@@ -31,5 +27,8 @@ def on_button_click():
             except sr.RequestError as e:
                 st.write("请求出错：", str(e))
 
-# 注册按钮点击事件的回调函数
-record_button.on_click(on_button_click)
+# 创建一个按钮来控制录音的开始和停止
+record_button = st.button("开始录音", onclicked=on_button_click)
+
+# 创建一个文本框用于显示识别结果
+result_text = st.empty()
