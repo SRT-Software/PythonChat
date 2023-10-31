@@ -1,4 +1,5 @@
 from bokeh.models import TextInput, Button, CustomJS
+from bokeh.events import ButtonClick
 import streamlit as st
 from streamlit_bokeh_events import streamlit_bokeh_events
 
@@ -10,7 +11,7 @@ button = Button(label="开始语音输入",button_type ='success')
 
 
 
-button.js_on_event("button_click", CustomJS(code="""
+button.js_on_event(ButtonClick, CustomJS(code="""
     console.log("js_on_event")
     var recognition = new webkitSpeechRecognition();
     recognition.continuous = true;
