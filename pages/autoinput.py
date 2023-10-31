@@ -26,6 +26,8 @@ button.js_on_event("button_click", CustomJS(code="""
             } else {
                 value2 += e.results[i][0].transcript;
             }
+            console.log("value:");
+            console.log(value);
         }
         document.dispatchEvent(new CustomEvent("GET_TEXT", {detail: {t:value, s:rand}}));
         document.dispatchEvent(new CustomEvent("GET_INTRM", {detail: value2}));
