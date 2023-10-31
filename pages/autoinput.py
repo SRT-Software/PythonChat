@@ -11,33 +11,19 @@ button = Button(label="开始语音输入",button_type ='success')
 
 
 button.js_on_event("button_click", CustomJS(code="""
-    console.log("js_on_event");
     var recognition = new webkitSpeechRecognition();
     recognition.continuous = true;
     recognition.interimResults = true;
-    recognition.lang = 'zh';
-    recognition.onresult = function(e){
-        var value, value2 = "";
-        for (var i = e.resultIndex; i < e.results.length; ++i) {
-            if (e.results[i].isFinal) {
-                value += e.results[i][0].transcript;
-                rand = Math.random();
-    
-            } else {
-                value2 += e.results[i][0].transcript;
-            }
-            console.log("value:");
-            console.log(value);
-        }
-        document.dispatchEvent(new CustomEvent("GET_TEXT", {detail: {t:value, s:rand}}));
-        document.dispatchEvent(new CustomEvent("GET_INTRM", {detail: value2}));
-    }
     recognition.start();
+    recognition.onresult = function(event) {
+        var result = event.results[event.results.length - 1][0].transcript;
+        document.dispatchEvent(new CustomEvent("GET_TEXT", {detail: {t:result, s:1}}));
+    };
 """))
 
 result = streamlit_bokeh_events(
     bokeh_plot = button,
-    events="GET_TEXT,GET_ONREC,GET_INTRM",
+    events="GET_TEXT",
     key="listen",
     refresh_on_update=False,
     override_height=75,
@@ -45,7 +31,7 @@ result = streamlit_bokeh_events(
 
 tr = st.empty()
 if result:
-    if "GET_INTRM" in result:
-        if result.get("GET_INTRM") != '':
-            tr.text_area("**Your input**", result.get("GET_INTRM"))
+    if "GET_TEXT" in result:
+        if result.get("GET_TEXT") != '':
+            tr.text_area("**Your input**", result.get("GET_TEXT"))
 
