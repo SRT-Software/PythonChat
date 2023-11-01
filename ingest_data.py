@@ -81,20 +81,25 @@ def ingest(database="pinecone"):
     # prepare basic vector
     docs = getDocs()
 
-    print('docs:\n', docs)
+    # print('docs:\n', docs)
     content_list = [chunk.page_content for chunk in docs]
-    print('content', len(content_list))
-    print(content_list)
+    # print('content', len(content_list))
+    # print(content_list)
     # 字符embedding后 1024维向量
     embedding_list = []
-    for content in content_list:
-        response = zhipuai.model_api.invoke(
-            model="text_embedding",
-            prompt=content
-        )
-        if 'data' in response:
-            embedding_list.append(response['data']['embedding'])
-            print(len(embedding_list))
+    for i in range(len(content_list)):
+        content = content_list[i]
+        try:
+            response = zhipuai.model_api.invoke(
+                model="text_embedding",
+                prompt=content
+            )
+            if 'data' in response:
+                embedding_list.append(response['data']['embedding'])
+                print(f"num: {len(embedding_list)}, total:{len(content_list)}")
+        except Exception as e:
+            print(e)
+            i -= 1
     tuple_list = []
     print(len(embedding_list[0]))
     print(docs[0])

@@ -80,7 +80,7 @@ pages_name_index = {
 
 if __name__ == '__main__':
     if 'index' not in st.session_state:
-        st.session_state.index = 0
+        st.session_state.index = 1
     demo_name = pages_name_index[st.session_state.index]
     pages_name_func[demo_name]()
 
