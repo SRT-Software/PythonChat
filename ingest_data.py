@@ -120,6 +120,7 @@ def ingest(database="pinecone"):
         str_list = content.split('\n')
     print("end read")
     for s in str_list:
+        print(s)
         float_vector = ast.literal_eval(s)
         embedding_list.append(float_vector)
 
