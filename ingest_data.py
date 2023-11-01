@@ -144,7 +144,7 @@ def ingest(database="pinecone"):
         tuple_list.append(d)
         metadatas.append(metadata)
     # 截短 防止太长一次不能插入
-    short_lists = split_list(tuple_list, 200)
+    short_lists = split_list(tuple_list, 2000)
 
     if database == "pinecone":
         pineconeStorage = initPinecone()
@@ -158,26 +158,30 @@ def ingest(database="pinecone"):
         json_list = [json.dumps(item)for item in metadatas]
         # for jsons in json_list:
         #     print(len(jsons))
+        json_shorts = split_list(json_list, 2000)
+        idx = 0
         try:
-            entities = [
-                [i for i in range(len(embedding_list))],  # field index
-                embedding_list,  # field embeddings
-                json_list,  # field metadata
-            ]
+            for short_list in short_lists:
+                entities = [
+                    [i + idx * 2000 for i in range(len(embedding_list))],  # field index
+                    short_list,  # field embeddings
+                    json_shorts,  # field metadata
+                ]
 
-            # 确保插入操作成功
-            insert_result = milvus.insert(entities)
-            # After final entity is inserted, it is best to call flush to have no growing segments left in memory
-            milvus.flush()
+                # 确保插入操作成功
+                insert_result = milvus.insert(entities)
+                # After final entity is inserted, it is best to call flush to have no growing segments left in memory
+                milvus.flush()
 
-            # 构建索引
-            index = {
-                "index_type": "IVF_FLAT",
-                "metric_type": "L2",
-                "params": {"nlist": 128},
-            }
-            milvus.create_index("embeddings", index)
-            os.remove(data_path)
+                # 构建索引
+                index = {
+                    "index_type": "IVF_FLAT",
+                    "metric_type": "L2",
+                    "params": {"nlist": 128},
+                }
+                milvus.create_index("embeddings", index)
+                idx += 1
+            # os.remove(data_path)
         except Exception as e:
             print(f"error : {str(e)}")
 
