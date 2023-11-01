@@ -30,7 +30,7 @@ WORKDIR /app
 # 复制项目文件到工作目录
 COPY . /app
 
-RUN pip install --upgrade pip
+
 # 安装依赖项
 RUN pip install -r requirements.txt
 
