@@ -132,7 +132,6 @@ def ingest(docs, database="pinecone"):
         except Exception as e:
             print(e)
             i -= 1
-    print("1: ", embedding_list[0])
     with open(data_path, 'a') as file:
         for embedding in embedding_list:
             file.write(f"{embedding}\n")
@@ -211,13 +210,14 @@ def ingest(docs, database="pinecone"):
                 idx += 1
             os.remove(data_path)
         except Exception as e:
-            print(f"error : {str(e)}")
+            print(e)
 
 
 if __name__ == '__main__':
     # connections.connect("default", host="localhost", port="19530")
     files = get_files_in_directory('docs')
+    index = 0
     for file in files:
-        print("file: ", file)
+        print(f"file{index}: {file}")
         doc = get_single_file_doc(file)
         ingest(docs=doc, database="milvus")
