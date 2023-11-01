@@ -84,7 +84,7 @@ def ingest(database="pinecone"):
     # print('docs:\n', docs)
     content_list = [chunk.page_content for chunk in docs]
     # print('content', len(content_list))
-    # print(content_list)
+    # print()
     # 字符embedding后 1024维向量
     embedding_list = []
     for i in range(len(content_list)):
@@ -96,13 +96,15 @@ def ingest(database="pinecone"):
             )
             if 'data' in response:
                 embedding_list.append(response['data']['embedding'])
-                print(f"num: {len(embedding_list)}, total:{len(content_list)}")
+                index = int(len(embedding_list) * 100 / len(content_list))
+                progress = '[' + '=' * index + ' ' * (100 - index) + ']'
+                print('\r', progress, f'{index}%', end='', flush=True)
         except Exception as e:
             print(e)
             i -= 1
     tuple_list = []
-    print(len(embedding_list[0]))
-    print(docs[0])
+    # print(len(embedding_list[0]))
+    # print(docs[0])
     metadatas = []
     for i in range(len(embedding_list)):
         metadata = {
@@ -130,26 +132,29 @@ def ingest(database="pinecone"):
         # 把向量添加到刚才建立的表格中
         # ids可以为None，使用自动生成的id
         json_list = [json.dumps(item)for item in metadatas]
-        for jsons in json_list:
-            print(len(jsons))
-        entities = [
-            [i for i in range(len(embedding_list))],  # field index
-            embedding_list,  # field embeddings
-            json_list,  # field metadata
-        ]
+        # for jsons in json_list:
+        #     print(len(jsons))
+        try:
+            entities = [
+                [i for i in range(len(embedding_list))],  # field index
+                embedding_list,  # field embeddings
+                json_list,  # field metadata
+            ]
 
-        # 确保插入操作成功
-        insert_result = milvus.insert(entities)
-        # After final entity is inserted, it is best to call flush to have no growing segments left in memory
-        milvus.flush()
+            # 确保插入操作成功
+            insert_result = milvus.insert(entities)
+            # After final entity is inserted, it is best to call flush to have no growing segments left in memory
+            milvus.flush()
 
-        # 构建索引
-        index = {
-            "index_type": "IVF_FLAT",
-            "metric_type": "L2",
-            "params": {"nlist": 128},
-        }
-        milvus.create_index("embeddings", index)
+            # 构建索引
+            index = {
+                "index_type": "IVF_FLAT",
+                "metric_type": "L2",
+                "params": {"nlist": 128},
+            }
+            milvus.create_index("embeddings", index)
+        except Exception as e:
+            print(f"error : {str(e)}")
 
 
 if __name__ == '__main__':
