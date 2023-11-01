@@ -221,3 +221,4 @@ if __name__ == '__main__':
         print(f"file{index}: {file}")
         doc = get_single_file_doc(file)
         ingest(docs=doc, database="milvus")
+        index += 1
