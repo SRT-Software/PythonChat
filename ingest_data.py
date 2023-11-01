@@ -15,6 +15,7 @@ from pymilvus import (
     DataType,
     Collection,
 )
+import os
 
 import numpy as np
 import json
@@ -24,6 +25,8 @@ zhipuai.api_key = CHATGLM_KEY
 
 milvus_collection_name = "pdf_milvus"
 
+data_path = "data.txt"
+meta_path = "meta_path"
 
 def split_list(long_list, chunk_size):
     return [long_list[i:i + chunk_size] for i in range(0, len(long_list), chunk_size)]
@@ -78,30 +81,41 @@ def getDocs(model="normal"):
 
 
 def ingest(database="pinecone"):
-    # prepare basic vector
     docs = getDocs()
+    if not os.path.exists(data_path):
+        # prepare basic vector
 
-    # print('docs:\n', docs)
-    content_list = [chunk.page_content for chunk in docs]
-    # print('content', len(content_list))
-    # print()
-    # 字符embedding后 1024维向量
+        # print('docs:\n', docs)
+        content_list = [chunk.page_content for chunk in docs]
+        # print('content', len(content_list))
+        # print()
+        # 字符embedding后 1024维向量
+        embedding_list = []
+        for i in range(len(content_list)):
+            content = content_list[i]
+            try:
+                response = zhipuai.model_api.invoke(
+                    model="text_embedding",
+                    prompt=content
+                )
+                if 'data' in response:
+                    embedding_list.append(response['data']['embedding'])
+                    index = int(len(embedding_list) * 100 / len(content_list))
+                    progress = '[' + '=' * index + ' ' * (100 - index) + ']'
+                    print('\r', progress, f'{index}%', end='', flush=True)
+            except Exception as e:
+                print(e)
+                i -= 1
+        print("1: ", embedding_list[0])
+        with open(data_path, 'a') as file:
+            for embedding in embedding_list:
+                file.write(f"{embedding}\n")
+
     embedding_list = []
-    for i in range(len(content_list)):
-        content = content_list[i]
-        try:
-            response = zhipuai.model_api.invoke(
-                model="text_embedding",
-                prompt=content
-            )
-            if 'data' in response:
-                embedding_list.append(response['data']['embedding'])
-                index = int(len(embedding_list) * 100 / len(content_list))
-                progress = '[' + '=' * index + ' ' * (100 - index) + ']'
-                print('\r', progress, f'{index}%', end='', flush=True)
-        except Exception as e:
-            print(e)
-            i -= 1
+    with open(data_path, 'r') as file:
+        content = file.read()
+        embedding_list = content.split('\n')
+    print("2: ", embedding_list[0])
     tuple_list = []
     # print(len(embedding_list[0]))
     # print(docs[0])
@@ -121,6 +135,8 @@ def ingest(database="pinecone"):
         metadatas.append(metadata)
     # 截短 防止太长一次不能插入
     short_lists = split_list(tuple_list, 200)
+        # 使用 'a' 模式打开文件，表示追加模式
+        # 如果文件不存在，将创建一个新文件；如果文件已存在，将在末尾追加新内容
 
     if database == "pinecone":
         pineconeStorage = initPinecone()
