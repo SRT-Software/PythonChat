@@ -169,6 +169,7 @@ def ingest(database="pinecone"):
                 "params": {"nlist": 128},
             }
             milvus.create_index("embeddings", index)
+            os.remove(data_path)
         except Exception as e:
             print(f"error : {str(e)}")
 
