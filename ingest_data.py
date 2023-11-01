@@ -144,7 +144,7 @@ def ingest(database="pinecone"):
         tuple_list.append(d)
         metadatas.append(metadata)
     # 截短 防止太长一次不能插入
-    short_lists = split_list(tuple_list, 2000)
+    short_lists = split_list(tuple_list, 1000)
 
     if database == "pinecone":
         pineconeStorage = initPinecone()
@@ -158,13 +158,13 @@ def ingest(database="pinecone"):
         json_list = [json.dumps(item)for item in metadatas]
         # for jsons in json_list:
         #     print(len(jsons))
-        json_shorts = split_list(json_list, 2000)
+        json_shorts = split_list(json_list, 1000)
         idx = 0
         try:
             print(idx)
             for short_list in short_lists:
                 entities = [
-                    [i + idx * 2000 for i in range(len(embedding_list))],  # field index
+                    [i + idx * 1000 for i in range(len(embedding_list))],  # field index
                     short_list,  # field embeddings
                     json_shorts,  # field metadata
                 ]
