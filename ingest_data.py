@@ -216,6 +216,7 @@ def ingest(docs, database="pinecone"):
 if __name__ == '__main__':
     # connections.connect("default", host="localhost", port="19530")
     files = get_files_in_directory('docs')
+    print('start')
     index = 0
     for file in files:
         print(f"file{index}: {file}")
