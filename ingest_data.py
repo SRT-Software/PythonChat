@@ -125,9 +125,9 @@ def ingest(database="pinecone"):
             embedding_list.append(float_vector)
         except Exception as e:
             print(f"{str(e)}")
-            print(s)
+            # print(s)
 
-    print("2: ", embedding_list[0])
+    # print("2: ", embedding_list[0])
     tuple_list = []
     metadatas = []
     for i in range(len(embedding_list)):
@@ -161,6 +161,7 @@ def ingest(database="pinecone"):
         json_shorts = split_list(json_list, 2000)
         idx = 0
         try:
+            print(idx)
             for short_list in short_lists:
                 entities = [
                     [i + idx * 2000 for i in range(len(embedding_list))],  # field index
