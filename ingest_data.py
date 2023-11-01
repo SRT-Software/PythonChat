@@ -17,7 +17,7 @@ from pymilvus import (
 )
 import os
 import ast
-
+import PyPDF2
 import numpy as np
 import json
 
@@ -62,27 +62,55 @@ def initMilvus():
         pdf_milvus = Collection(milvus_collection_name)
         return pdf_milvus
 
+def get_files_in_directory(directory_path):
+    file_list = []
+    for root, dirs, files in os.walk(directory_path):
+        for file_name in files:
+            file_path = os.path.join(root, file_name)
+            file_list.append(file_path)
+    return file_list
 
-def getDocs(model="normal"):
-    directoryLoader = DirectoryLoader('docs', glob='*.pdf', loader_cls=PyPDFLoader)
-    rawDocs = directoryLoader.load()
-    # rawDocs = rawDocs[10:20]
-    if model == "normal":
+def get_single_file_doc(path, model="normal"):
+    rawDocs = []
+    pdfLoader = PyPDFLoader(file_path=path)
+    doc = pdfLoader.load()
+    for d in doc:
+        rawDocs.append(d)
+
+    if model == 'ali':
+        textSplitter = SemanticTextSplitter(pdf=True)
+    else:
         textSplitter = RecursiveCharacterTextSplitter(chunk_size=120, chunk_overlap=80)
+    docs = textSplitter.split_documents(rawDocs)
+    return docs
+def getDocs(model="normal"):
+    files_list = get_files_in_directory("docs")
+    rawDocs = []
+    for file in files_list:
+        pdfLoader = PyPDFLoader(file_path=file)
+        doc = pdfLoader.load()
+        for d in doc:
+            rawDocs.append(d)
+
+    # directoryLoader = DirectoryLoader('docs', glob='*.pdf', loader_cls=PyPDFLoader)
+    # rawDocs = directoryLoader.load()
+    # rawDocs = rawDocs[10:20]
+
     # print(len(d))
     # rawDocs = []
     # for i in range(3):
     #     rawDocs.append(d[i+10])
     # splitter = RecursiveCharacterTextSplitter(chunk_size=200, chunk_overlap=150)
     # s = splitter.split_documents(rawDocs)
-    elif model == 'ali':
+    if model == 'ali':
         textSplitter = SemanticTextSplitter(pdf=True)
+    else:
+        textSplitter = RecursiveCharacterTextSplitter(chunk_size=120, chunk_overlap=80)
     docs = textSplitter.split_documents(rawDocs)
     return docs
 
 
-def ingest(database="pinecone"):
-    docs = getDocs()
+def ingest(docs, database="pinecone"):
     if not os.path.exists(data_path):
         # prepare basic vector
 
@@ -191,4 +219,8 @@ def ingest(database="pinecone"):
 
 if __name__ == '__main__':
     # connections.connect("default", host="localhost", port="19530")
-    ingest(database="milvus")
+    files = get_files_in_directory('docs')
+    for file in files:
+        print("file: ", file)
+        doc = get_single_file_doc(file)
+        ingest(docs=doc, database="milvus")
