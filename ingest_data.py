@@ -129,7 +129,7 @@ def ingest(database="pinecone"):
             print(si)
         si += 1
 
-    # print("2: ", embedding_list[0])
+    print(len(embedding_list))
     tuple_list = []
     metadatas = []
     for i in range(len(embedding_list)):
@@ -190,5 +190,5 @@ def ingest(database="pinecone"):
 
 
 if __name__ == '__main__':
-    connections.connect("default", host="localhost", port="19530")
+    # connections.connect("default", host="localhost", port="19530")
     ingest(database="milvus")
