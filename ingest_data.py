@@ -112,20 +112,19 @@ def ingest(database="pinecone"):
             for embedding in embedding_list:
                 file.write(f"{embedding}\n")
 
+    print("start read")
     embedding_list = []
     str_list = []
     with open(data_path, 'r') as file:
         content = file.read()
         str_list = content.split('\n')
-
+    print("end read")
     for s in str_list:
         float_vector = ast.literal_eval(s)
         embedding_list.append(float_vector)
 
     print("2: ", embedding_list[0])
     tuple_list = []
-    # print(len(embedding_list[0]))
-    # print(docs[0])
     metadatas = []
     for i in range(len(embedding_list)):
         metadata = {
@@ -142,8 +141,6 @@ def ingest(database="pinecone"):
         metadatas.append(metadata)
     # 截短 防止太长一次不能插入
     short_lists = split_list(tuple_list, 200)
-        # 使用 'a' 模式打开文件，表示追加模式
-        # 如果文件不存在，将创建一个新文件；如果文件已存在，将在末尾追加新内容
 
     if database == "pinecone":
         pineconeStorage = initPinecone()
