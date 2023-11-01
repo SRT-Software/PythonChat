@@ -17,8 +17,6 @@ from pymilvus import (
 )
 import os
 import ast
-import PyPDF2
-import numpy as np
 import json
 
 filePath = 'docs'
