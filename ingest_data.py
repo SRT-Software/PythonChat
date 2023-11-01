@@ -16,6 +16,7 @@ from pymilvus import (
     Collection,
 )
 import os
+import ast
 
 import numpy as np
 import json
@@ -112,9 +113,15 @@ def ingest(database="pinecone"):
                 file.write(f"{embedding}\n")
 
     embedding_list = []
+    str_list = []
     with open(data_path, 'r') as file:
         content = file.read()
-        embedding_list = content.split('\n')
+        str_list = content.split('\n')
+
+    for s in str_list:
+        float_vector = ast.literal_eval(s)
+        embedding_list.append(float_vector)
+
     print("2: ", embedding_list[0])
     tuple_list = []
     # print(len(embedding_list[0]))
