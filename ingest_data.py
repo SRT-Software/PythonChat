@@ -109,53 +109,52 @@ def getDocs(model="normal"):
 
 
 def ingest(docs, database="pinecone"):
-    if not os.path.exists(data_path):
+    # if not os.path.exists(data_path):
         # prepare basic vector
-
         # print('docs:\n', docs)
-        content_list = [chunk.page_content for chunk in docs]
-        # print('content', len(content_list))
-        # print()
-        # 字符embedding后 1024维向量
-        embedding_list = []
-        for i in range(len(content_list)):
-            content = content_list[i]
-            try:
-                response = zhipuai.model_api.invoke(
-                    model="text_embedding",
-                    prompt=content
-                )
-                if 'data' in response:
-                    embedding_list.append(response['data']['embedding'])
-                    index = int(len(embedding_list) * 100 / len(content_list))
-                    progress = '[' + '=' * index + ' ' * (100 - index) + ']'
-                    print('\r', progress, f'{index}%', end='', flush=True)
-            except Exception as e:
-                print(e)
-                i -= 1
-        print("1: ", embedding_list[0])
-        with open(data_path, 'a') as file:
-            for embedding in embedding_list:
-                file.write(f"{embedding}\n")
-
-    print("start read")
+    content_list = [chunk.page_content for chunk in docs]
+    # print('content', len(content_list))
+    # print()
+    # 字符embedding后 1024维向量
     embedding_list = []
-    str_list = []
-    with open(data_path, 'r') as file:
-        content = file.read()
-        str_list = content.split('\n')
-    print("end read")
-    si = 0
-    for s in str_list:
+    for i in range(len(content_list)):
+        content = content_list[i]
         try:
-            float_vector = ast.literal_eval(s)
-            embedding_list.append(float_vector)
+            response = zhipuai.model_api.invoke(
+                model="text_embedding",
+                prompt=content
+            )
+            if 'data' in response:
+                embedding_list.append(response['data']['embedding'])
+                index = int(len(embedding_list) * 100 / len(content_list))
+                progress = '[' + '=' * index + ' ' * (100 - index) + ']'
+                print('\r', progress, f'{index}%', end='', flush=True)
         except Exception as e:
-            print(f"{str(e)}")
-            print(si)
-        si += 1
+            print(e)
+            i -= 1
+    print("1: ", embedding_list[0])
+    with open(data_path, 'a') as file:
+        for embedding in embedding_list:
+            file.write(f"{embedding}\n")
 
-    print(len(embedding_list))
+    # print("start read")
+    # embedding_list = []
+    # str_list = []
+    # with open(data_path, 'r') as file:
+    #     content = file.read()
+    #     str_list = content.split('\n')
+    # print("end read")
+    # si = 0
+    # for s in str_list:
+    #     try:
+    #         float_vector = ast.literal_eval(s)
+    #         embedding_list.append(float_vector)
+    #     except Exception as e:
+    #         print(f"{str(e)}")
+    #         print(si)
+    #     si += 1
+    #
+    # print(len(embedding_list))
     tuple_list = []
     metadatas = []
     for i in range(len(embedding_list)):
@@ -210,7 +209,7 @@ def ingest(docs, database="pinecone"):
                 }
                 milvus.create_index("embeddings", index)
                 idx += 1
-            # os.remove(data_path)
+            os.remove(data_path)
         except Exception as e:
             print(f"error : {str(e)}")
 
