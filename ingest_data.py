@@ -35,6 +35,7 @@ def split_list(long_list, chunk_size):
 
 
 def initPinecone():
+
     try:
         pinecone.init(api_key=PINECONE_API_KEY, environment=PINECONE_ENVIRONMENT)
         return pinecone
@@ -43,13 +44,15 @@ def initPinecone():
 
 
 def initMilvus():
-    try:
-        connections.connect("default", host="localhost", port="19530")
-    except Exception as e:
-        cmd_command = 'docker-compose down'  # 替换为您要执行的实际CMD命令
-        subprocess.run(cmd_command, shell=True, capture_output=True, text=True)
-        cmd_command = 'docker-compose up -d'  # 替换为您要执行的实际CMD命令
-        subprocess.run(cmd_command, shell=True, capture_output=True, text=True)
+    while True:
+        try:
+            connections.connect("default", host="localhost", port="19530")
+            break
+        except Exception as e:
+            cmd_command = 'docker-compose down'  # 替换为您要执行的实际CMD命令
+            subprocess.run(cmd_command, shell=True, capture_output=True, text=True)
+            cmd_command = 'docker-compose up -d'  # 替换为您要执行的实际CMD命令
+            subprocess.run(cmd_command, shell=True, capture_output=True, text=True)
     if not utility.has_collection(milvus_collection_name):
         # 向量个数
         num_vec = 10000
