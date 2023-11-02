@@ -188,11 +188,9 @@ def ingest(docs, database="pinecone"):
         # for jsons in json_list:
         #     print(len(jsons))
         # json_shorts = split_list(json_list, 1000)
-        idx_list = [i + globals()["chunk_index"] for i in range(len(embedding_list))],  # field index
         try:
-
             entities = [
-                idx_list,
+                [i + globals()["chunk_index"] for i in range(len(embedding_list))],
                 embedding_list,  # field embeddings
                 json_list,  # field metadata
             ]
