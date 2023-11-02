@@ -27,7 +27,7 @@ milvus_collection_name = "pdf_milvus"
 data_path = "data.txt"
 meta_path = "meta_path"
 
-global chunk_index
+chunk_index = 0
 
 def split_list(long_list, chunk_size):
     return [long_list[i:i + chunk_size] for i in range(0, len(long_list), chunk_size)]
@@ -114,6 +114,7 @@ def ingest(docs, database="pinecone"):
     # if not os.path.exists(data_path):
         # prepare basic vector
         # print('docs:\n', docs)
+    global chunk_index
     content_list = [chunk.page_content for chunk in docs]
     # print('content', len(content_list))
     # print()
@@ -187,7 +188,7 @@ def ingest(docs, database="pinecone"):
         # for jsons in json_list:
         #     print(len(jsons))
         # json_shorts = split_list(json_list, 1000)
-        idx_list = [i + chunk_index for i in range(len(embedding_list))],  # field index
+        idx_list = [i + globals()["chunk_index"] for i in range(len(embedding_list))],  # field index
         try:
 
             entities = [
@@ -209,7 +210,7 @@ def ingest(docs, database="pinecone"):
                 "params": {"nlist": 128},
             }
             milvus.create_index("embeddings", index)
-            chunk_index += len(embedding_list)
+            globals()["chunk_index"] += len(embedding_list)
         except Exception as e:
             print(e)
 
@@ -219,7 +220,7 @@ if __name__ == '__main__':
     files = get_files_in_directory('docs')
     print('start')
     index = 0
-    chunk_index = 0
+    globals()["chunk_index"] = 0
     for file in files:
         print(f"file{index}: {file}")
         doc = get_single_file_doc(file)
