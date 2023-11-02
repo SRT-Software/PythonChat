@@ -18,6 +18,7 @@ from pymilvus import (
 import os
 import ast
 import json
+import subprocess
 
 filePath = 'docs'
 zhipuai.api_key = CHATGLM_KEY
@@ -42,7 +43,13 @@ def initPinecone():
 
 
 def initMilvus():
-    connections.connect("default", host="localhost", port="19530")
+    try:
+        connections.connect("default", host="localhost", port="19530")
+    except Exception as e:
+        cmd_command = 'docker-compose down'  # 替换为您要执行的实际CMD命令
+        subprocess.run(cmd_command, shell=True, capture_output=True, text=True)
+        cmd_command = 'docker-compose up -d'  # 替换为您要执行的实际CMD命令
+        subprocess.run(cmd_command, shell=True, capture_output=True, text=True)
     if not utility.has_collection(milvus_collection_name):
         # 向量个数
         num_vec = 10000
@@ -220,7 +227,7 @@ if __name__ == '__main__':
     index = 0
     globals()["chunk_index"] = 0
     for file in files:
-        if file.endswith('.pdf') and index > 42:
+        if file.endswith('.pdf') and index > 44:
             print(f"file{index}: {file}, total: {len(files)}")
             doc = get_single_file_doc(file)
             ingest(docs=doc, database="milvus")
