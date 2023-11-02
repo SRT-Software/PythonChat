@@ -27,6 +27,8 @@ milvus_collection_name = "pdf_milvus"
 data_path = "data.txt"
 meta_path = "meta_path"
 
+global chunk_index
+
 def split_list(long_list, chunk_size):
     return [long_list[i:i + chunk_size] for i in range(0, len(long_list), chunk_size)]
 
@@ -184,31 +186,30 @@ def ingest(docs, database="pinecone"):
         json_list = [json.dumps(item)for item in metadatas]
         # for jsons in json_list:
         #     print(len(jsons))
-        json_shorts = split_list(json_list, 1000)
-        idx = 0
+        # json_shorts = split_list(json_list, 1000)
+        idx_list = [i + chunk_index for i in range(len(embedding_list))],  # field index
         try:
-            print(idx)
-            for short_list in short_lists:
-                entities = [
-                    [i + idx * 1000 for i in range(len(embedding_list))],  # field index
-                    short_list,  # field embeddings
-                    json_shorts,  # field metadata
-                ]
 
-                # 确保插入操作成功
-                insert_result = milvus.insert(entities)
-                # After final entity is inserted, it is best to call flush to have no growing segments left in memory
-                milvus.flush()
+            entities = [
+                idx_list,
+                embedding_list,  # field embeddings
+                json_list,  # field metadata
+            ]
 
-                # 构建索引
-                index = {
-                    "index_type": "IVF_FLAT",
-                    "metric_type": "L2",
-                    "params": {"nlist": 128},
-                }
-                milvus.create_index("embeddings", index)
-                idx += 1
-            os.remove(data_path)
+            # 确保插入操作成功
+            insert_result = milvus.insert(entities)
+            print(f"result: {insert_result}")
+            # After final entity is inserted, it is best to call flush to have no growing segments left in memory
+            milvus.flush()
+
+            # 构建索引
+            index = {
+                "index_type": "IVF_FLAT",
+                "metric_type": "L2",
+                "params": {"nlist": 128},
+            }
+            milvus.create_index("embeddings", index)
+            chunk_index += len(embedding_list)
         except Exception as e:
             print(e)
 
@@ -218,6 +219,7 @@ if __name__ == '__main__':
     files = get_files_in_directory('docs')
     print('start')
     index = 0
+    chunk_index = 0
     for file in files:
         print(f"file{index}: {file}")
         doc = get_single_file_doc(file)
