@@ -220,7 +220,8 @@ if __name__ == '__main__':
     index = 0
     globals()["chunk_index"] = 0
     for file in files:
-        print(f"file{index}: {file}")
-        doc = get_single_file_doc(file)
-        ingest(docs=doc, database="milvus")
+        if file.endswith('.pdf'):
+            print(f"file{index}: {file}")
+            doc = get_single_file_doc(file)
+            ingest(docs=doc, database="milvus")
         index += 1
