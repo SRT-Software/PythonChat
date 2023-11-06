@@ -28,13 +28,14 @@ def login_web():
 
 
 def chat_web():
+    st.title("Chat")
     hello()
     chat()
 
 
 def hello():
     with st.chat_message("assistant"):
-        st.write("Hello 👋")
+        st.write("你好 👋")
 
 
 def chat():
