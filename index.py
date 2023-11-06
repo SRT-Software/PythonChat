@@ -28,7 +28,7 @@ def login_web():
 
 
 def chat_web():
-    st.title("Chat")
+    st.title("<center>Chat<center>",anchor=False)
     hello()
     chat()
 
