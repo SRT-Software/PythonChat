@@ -34,7 +34,7 @@ def chat_web():
         <style>
         .title {
             text-align: center;
-            font-size: 36px;
+            font-size: 30px;
         }
         </style>
         """,
