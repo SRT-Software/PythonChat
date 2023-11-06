@@ -29,7 +29,7 @@ def login_web():
 
 def chat_web():
     # st.header("Chat",anchor=False)
-    st.markdown('<div class="title"><center><h1>Chat</h1></center></div>', unsafe_allow_html=True)
+    st.markdown('<div class="title" style="font-size: 100px"><center><h1>Chat</h1></center></div>', unsafe_allow_html=True)
     hello()
     chat()
 
