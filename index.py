@@ -36,7 +36,7 @@ def chat_web():
             text-align: center;
             font-size: 80px;
             font-weight:bold;
-            position:fixed;
+            position:absolute;
         }
         </style>
         """,
