@@ -34,13 +34,12 @@ def chat_web():
         <style>
         .title {
             text-align: center;
-            font-size: 30px;
         }
         </style>
         """,
         unsafe_allow_html=True
     )
-    st.markdown('<div class="title">Chat</div>', unsafe_allow_html=True)
+    st.markdown('<div class="title"><h1>Chat</h1></div>', unsafe_allow_html=True)
     hello()
     chat()
 
