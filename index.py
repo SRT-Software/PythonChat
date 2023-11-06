@@ -52,19 +52,8 @@ def hello():
 
 
 def chat():
-    st.markdown(
-        """
-        <style>
-        .text {
-            position: fixed;
-            right:10px;
-            font-size: 20px;
-        }
-        </style>
-        """,
-        unsafe_allow_html=True
-    )
-    st.markdown('<div class="text">脚手架</div>', unsafe_allow_html=True)
+    with st.sidebar:
+        st.button("111")
     if "messages" not in st.session_state:
         st.session_state.messages = []
 
