@@ -57,9 +57,8 @@ def chat():
         <style>
         .text {
             position: fixed;
-            margin-right:10px;
-            font-size: 80px;
-            font-weight:bold;
+            right:10px;
+            font-size: 20px;
         }
         </style>
         """,
