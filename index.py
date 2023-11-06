@@ -40,7 +40,7 @@ def chat_web():
         """,
         unsafe_allow_html=True
     )
-    st.markdown('<div class="title" style="font-size: 100px">Chat</div>', unsafe_allow_html=True)
+    st.markdown('<div class="title">Chat</div>', unsafe_allow_html=True)
     hello()
     chat()
 
