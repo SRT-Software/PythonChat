@@ -75,10 +75,12 @@ def chat_web():
             button_callback0()
     globals()["btn2"] = st.sidebar.empty()
     with globals()["btn2"]:
-        st.button(label=st.session_state.lists[1], use_container_width=True, key='btn2', on_click=button_callback1)
+        if st.button(label=st.session_state.lists[1], use_container_width=True, key='btn2'):
+            button_callback1()
     globals()["btn3"] = st.sidebar.empty()
     with globals()["btn3"]:
-        st.button(label=st.session_state.lists[2], use_container_width=True, key='btn3', on_click=button_callback2)
+        if st.button(label=st.session_state.lists[2], use_container_width=True, key='btn3'):
+            button_callback2
 
     hello()
     chat()
@@ -139,14 +141,17 @@ def chat():
             st.session_state.lists = relative_ques(full_response)
             st.session_state.prompt = None
             print("buttons: ", st.session_state.lists)
-            with globals()["btn1"] :
-                st.button(label=st.session_state.lists[0], use_container_width=True, key='btn4', on_click=button_callback0)
-                
-            with globals()["btn2"] :
-                st.button(label=st.session_state.lists[1], use_container_width=True, key='btn5', on_click=button_callback1)
-                
+            with globals()["btn1"]:
+                if st.button(label=st.session_state.lists[0], use_container_width=True, key='btn4'):
+                    button_callback0()
+            globals()["btn2"] = st.sidebar.empty()
+            with globals()["btn2"]:
+                if st.button(label=st.session_state.lists[1], use_container_width=True, key='btn5'):
+                    button_callback1()
+            globals()["btn3"] = st.sidebar.empty()
             with globals()["btn3"]:
-                st.button(label=st.session_state.lists[2], use_container_width=True, key='btn6', on_click=button_callback2)
+                if st.button(label=st.session_state.lists[2], use_container_width=True, key='btn6'):
+                    button_callback2
                 
 
 
