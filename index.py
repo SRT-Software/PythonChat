@@ -55,10 +55,13 @@ def chat_web():
         print("buttons: ", st.session_state.lists)
         if st.button(label=st.session_state.lists[0], use_container_width=True, key=1):
             st.session_state.prompt = st.session_state.lists[0]
+            st.toast('正在生成提示词', icon='🎈')
         if st.button(label=st.session_state.lists[1], use_container_width=True, key=2):
             st.session_state.prompt = st.session_state.lists[1]
+            st.toast('正在生成提示词', icon='🎈')
         if st.button(label=st.session_state.lists[2], use_container_width=True, key=3):
             st.session_state.prompt = st.session_state.lists[2]
+            st.toast('正在生成提示词', icon='🎈')
 
 
     hello()
@@ -121,10 +124,13 @@ def chat():
             with st.sidebar:
                 if st.button(label=st.session_state.lists[0], use_container_width=True, key=4):
                     st.session_state.prompt = st.session_state.lists[0]
+                    st.toast('正在生成提示词', icon='🎈')
                 if st.button(label=st.session_state.lists[1], use_container_width=True, key=5):
                     st.session_state.prompt = st.session_state.lists[1]
+                    st.toast('正在生成提示词', icon='🎈')
                 if st.button(label=st.session_state.lists[2], use_container_width=True, key=6):
                     st.session_state.prompt = st.session_state.lists[2]
+                    st.toast('正在生成提示词', icon='🎈')
                 
 
 
