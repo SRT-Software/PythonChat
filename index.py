@@ -177,8 +177,9 @@ def chat():
         with st.expander(expander_text):
             st.markdown(st.session_state.text[i])
     if st.session_state.cnt == 1:
-        st.experimental_rerun()
         st.session_state.cnt = 0
+        st.experimental_rerun()
+        
                 
 
 
