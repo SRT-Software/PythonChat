@@ -116,12 +116,9 @@ def chat():
         #         expander_text = 'file: {}, page: {}'.format(sources[i][0], int(sources[i][1]))
         #         with st.expander(expander_text):
         #             st.markdown(texts[i])
-            globals()["new_list"] = relative_ques(st.session_state.prompt)
-            print(globals()["new_list"])
+            st.session_state.lists = relative_ques(st.session_state.prompt)
             st.session_state.prompt = None
-
-
-                    
+                
 
 
 pages_name_func = {
@@ -143,8 +140,8 @@ if __name__ == '__main__':
 
     if 'lists' not in st.session_state:
         st.session_state.lists =  random.sample(question_list, 3)
-    else:
-        st.session_state.lists =  globals()["new_list"]
+    
+    print("lists:", st.session_state.lists)
     demo_name = pages_name_index[st.session_state.index]
     pages_name_func[demo_name]()
 
