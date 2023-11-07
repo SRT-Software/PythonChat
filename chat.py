@@ -11,8 +11,8 @@ QA_TEMPLATE = 'You are a helpful AI assistant. Use the following pieces of conte
 
 QUES_TEMPLATE = 'make 3 relative questions with {}'\
                 'give me the answer in Chinese'\
-                'the answer\'s format is [question1; question2; question3]'\
-                'do not answer the ques, you can only give me [question1; question2; question3]'
+                'the answer\'s format is [question1@ question2@ question3]'\
+                'do not answer the ques, you can only give me [question1@ question2@ question3]'
 
 
 def chatbot(ques):
@@ -42,7 +42,7 @@ def relative_ques(ques):
     for event in response.events():
         data += event.data
     # print(data)
-    datas = data.replace('[', '').replace(']', '').split('；')
+    datas = data.replace('[', '').replace(']', '').split('@')
     print("relative ques: ", datas)
     return datas
 

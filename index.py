@@ -65,7 +65,7 @@ def chat_web():
         """,
         unsafe_allow_html=True
     )
-    st.markdown('<div class="title">Chat</div>', unsafe_allow_html=True)
+    st.markdown('<div class="title">AI问答</div>', unsafe_allow_html=True)
     with st.sidebar:
         st.title("提示")
     globals()["btn1"] = st.sidebar.empty()
@@ -73,12 +73,10 @@ def chat_web():
     with globals()["btn1"]:
         if st.button(label=st.session_state.lists[0], use_container_width=True, key='btn1', on_click=lambda: button_callback0):
             st.session_state.prompt = st.session_state.lists[0]
-            st.toast('正在生成提示词', icon='🎈')
     globals()["btn2"] = st.sidebar.empty()
     with globals()["btn2"]:
         if st.button(label=st.session_state.lists[1], use_container_width=True, key='btn2', on_click=lambda: button_callback1):
             st.session_state.prompt = st.session_state.lists[1]
-            st.toast('正在生成提示词', icon='🎈')
     globals()["btn3"] = st.sidebar.empty()
     with globals()["btn3"]:
         st.button(label=st.session_state.lists[2], use_container_width=True, key='btn3', on_click=lambda: button_callback2)
@@ -145,15 +143,12 @@ def chat():
             with globals()["btn1"] :
                 if st.button(label=st.session_state.lists[0], use_container_width=True, key='btn4', on_click=lambda: button_callback0):
                     st.session_state.prompt = st.session_state.lists[0]
-                    st.toast('正在生成提示词', icon='🎈')
             with globals()["btn2"] :
                 if st.button(label=st.session_state.lists[1], use_container_width=True, key='btn5', on_click=lambda: button_callback1):
                     st.session_state.prompt = st.session_state.lists[1]
-                    st.toast('正在生成提示词', icon='🎈')
             with globals()["btn3"]:
                 if st.button(label=st.session_state.lists[2], use_container_width=True, key='btn6', on_click=lambda: button_callback2):
                     st.session_state.prompt = st.session_state.lists[2]
-                    st.toast('正在生成提示词', icon='🎈')
 
 
 
