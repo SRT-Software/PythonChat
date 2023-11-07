@@ -4,7 +4,23 @@ from enum import Enum
 from config.User import User, default_user
 import random
 
-question_list = ['脚手架的操作规范', '矿井内氧气含量过低怎么办', '遭遇恶劣天气应该如何处理','申报中国电力优质工程的条件','安全质量部的工作是什么',' 施工组织设计的编制的要求','如何防止高处坠落事故','人工挖孔桩的设计要求','如何防止边坡坍塌','塔机的尾部与周围建筑物及其外围施工设施之间的安全距离是多少','如何防止缆索起重机起重伤害','如何防止高压触电事故','为了防止机械伤害事故，应采取哪些措施','什么情况下严禁对已充油的变压器、电抗器的微小渗漏进行补焊','如何防止燃油罐区火灾','如何防止场内车辆伤害事故','液氨储罐区的设置要求']
+question_list = ['脚手架的操作规范', 
+                 '矿井内氧气含量过低怎么办', 
+                 '遭遇恶劣天气应该如何处理',
+                 '申报中国电力优质工程的条件',
+                 '安全质量部的工作是什么',
+                 '施工组织设计的编制的要求',
+                 '如何防止高处坠落事故',
+                 '人工挖孔桩的设计要求',
+                 '如何防止边坡坍塌',
+                 '塔机的尾部与周围建筑物及其外围施工设施之间的安全距离是多少',
+                 '如何防止缆索起重机起重伤害',
+                 '如何防止高压触电事故',
+                 '为了防止机械伤害事故，应采取哪些措施',
+                 '什么情况下严禁对已充油的变压器、电抗器的微小渗漏进行补焊',
+                 '如何防止燃油罐区火灾',
+                 '如何防止场内车辆伤害事故',
+                 '液氨储罐区的设置要求']
 
 new_list = []
 btn0 = None
@@ -138,7 +154,7 @@ def chat():
                 expander_text = 'file: {}, page: {}'.format(sources[i][0], int(sources[i][1]))
                 with st.expander(expander_text):
                     st.markdown(texts[i])
-            st.session_state.lists = relative_ques(full_response)
+            st.session_state.lists = random_question()
             st.session_state.prompt = None
             print("buttons: ", st.session_state.lists)
             with globals()["btn1"]:
