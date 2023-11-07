@@ -49,6 +49,17 @@ def chat_web():
         unsafe_allow_html=True
     )
     st.markdown('<div class="title">Chat</div>', unsafe_allow_html=True)
+    with st.sidebar:
+        random_question()
+        st.title("提示")
+        option = st.selectbox(
+            'How would you like to be contacted?',
+            (globals()["new_list"][0], globals()["new_list"][1], globals()["new_list"][2]),
+            index=None,
+            placeholder="选择对应的提示",
+        )
+        print("option ", option)
+        st.session_state.prompt = option
     hello()
     chat()
 
@@ -82,6 +93,7 @@ def chat():
     prompt = st.chat_input("请输入聊天内容")
     if prompt is not None:
         st.session_state.prompt = prompt
+    print(st.session_state.prompt)
     if st.session_state.prompt is not None:
         # Add user message to chat history
         st.session_state.messages.append({"role": "user", "content": st.session_state.prompt})
@@ -104,8 +116,8 @@ def chat():
                     with st.expander(expander_text):
                         st.markdown(texts[i])
             except Exception as e:
-                st.markdown(e)
-            globals()["new_list"] = relative_ques(st.session_state.prompt)
+                st.markdown(str(e))
+            new_list = relative_ques(st.session_state.prompt)
             st.session_state.prompt = None
 
 
@@ -129,17 +141,6 @@ if __name__ == '__main__':
     if 'option' not in st.session_state:
         st.session_state.prompt = None
     st.toast("🎈 侧边栏为问答提示")
-    with st.sidebar:
-        random_question()
-        st.title("提示")
-        option = st.selectbox(
-            'How would you like to be contacted?',
-            (globals()["new_list"][0], globals()["new_list"][1], globals()["new_list"][2]),
-            index=None,
-            placeholder="选择对应的提示",
-        )
-        print("option ", option)
-        st.session_state.prompt = option
     demo_name = pages_name_index[st.session_state.index]
     pages_name_func[demo_name]()
 
