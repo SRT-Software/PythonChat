@@ -43,6 +43,7 @@ def relative_ques(ques):
         data += event.data
 
     datas = data.replace('[', '').replace(']', '').split(',')
+    print(datas)
     return datas
 
 if __name__ == '__main__':
