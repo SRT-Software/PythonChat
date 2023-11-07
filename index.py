@@ -175,7 +175,7 @@ def chat():
             with globals()["btn3"]:
                 if st.button(label=st.session_state.lists[2], use_container_width=True, key='btn6'):
                     button_callback2()
-            st.sidebar.experimental_rerun()
+            st.experimental_rerun()
                 
 
 
