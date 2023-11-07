@@ -132,15 +132,15 @@ def chat():
             st.session_state.lists = relative_ques(st.session_state.prompt)
             st.session_state.prompt = None
             print("buttons: ", st.session_state.lists)
-            with globals()["btn0"] :
+            with globals()["btn1"] :
                 if st.button(label=st.session_state.lists[0], use_container_width=True, key='btn4'):
                     st.session_state.prompt = st.session_state.lists[0]
                     st.toast('正在生成提示词', icon='🎈')
-            with globals()["btn1"] :
+            with globals()["btn2"] :
                 if st.button(label=st.session_state.lists[1], use_container_width=True, key='btn5'):
                     st.session_state.prompt = st.session_state.lists[1]
                     st.toast('正在生成提示词', icon='🎈')
-            with globals()["btn2"]:
+            with globals()["btn3"]:
                 if st.button(label=st.session_state.lists[2], use_container_width=True, key='btn6'):
                     st.session_state.prompt = st.session_state.lists[2]
                     st.toast('正在生成提示词', icon='🎈')
