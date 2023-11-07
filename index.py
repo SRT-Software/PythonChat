@@ -96,27 +96,25 @@ def chat():
     print(st.session_state.prompt)
     if st.session_state.prompt is not None:
         # Add user message to chat history
-        st.session_state.messages.append({"role": "user", "content": st.session_state.prompt})
+        # Add user message to chat history
+        st.session_state.messages.append({"role": "user", "content": prompt})
         # Display user message in chat message container
         with st.chat_message("user"):
-            st.markdown(st.session_state.prompt)
+            st.markdown(prompt)
         # Display assistant response in chat message container
         with st.chat_message("assistant"):
             message_placeholder = st.empty()
             full_response = ""
-            try:
-                response, sources, texts = chatbot(st.session_state.prompt)
-                for event in response.events():
-                    full_response += event.data
-                    message_placeholder.markdown(full_response + " ")
-                message_placeholder.markdown(full_response)
-                st.session_state.messages.append({"role": "assistant", "content": full_response})
-                for i in range(len(sources)):
-                    expander_text = 'file: {}, page: {}'.format(sources[i][0], int(sources[i][1]))
-                    with st.expander(expander_text):
-                        st.markdown(texts[i])
-            except Exception as e:
-                print(e)
+            response, sources, texts = chatbot(prompt)
+            for event in response.events():
+                full_response += event.data
+                message_placeholder.markdown(full_response + " ")
+            message_placeholder.markdown(full_response)
+            st.session_state.messages.append({"role": "assistant", "content": full_response})
+            for i in range(len(sources)):
+                expander_text = 'file: {}, page: {}'.format(sources[i][0], int(sources[i][1]))
+                with st.expander(expander_text):
+                    st.markdown(texts[i])
             new_list = relative_ques(st.session_state.prompt)
             st.session_state.prompt = None
 
