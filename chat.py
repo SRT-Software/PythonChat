@@ -41,8 +41,8 @@ def relative_ques(ques):
     data = ''
     for event in response.events():
         data += event.data
-
-    datas = data.replace('[', '').replace(']', '').split(',')
+    print(data)
+    datas = data.replace('[', '').replace(']', '').split('，')
     print(datas)
     return datas
 
