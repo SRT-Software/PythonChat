@@ -35,7 +35,7 @@ def match_query(ques, database="pinecone"):
         source_list = [(text['metadata']['source'], text['metadata']['page']) for text in query['matches']]
         return text_list, source_list
     else:
-        milvus = initMilvus();
+        milvus = initMilvus()
         milvus.load()
         vectors_to_search = embedding
         search_params = {
