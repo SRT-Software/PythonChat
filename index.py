@@ -154,7 +154,7 @@ def chat():
                 expander_text = 'file: {}, page: {}'.format(sources[i][0], int(sources[i][1]))
                 with st.expander(expander_text):
                     st.markdown(texts[i])
-            st.session_state.lists = random_question()
+            random_question()
             st.session_state.prompt = None
             print("buttons: ", st.session_state.lists)
             with globals()["btn1"]:
