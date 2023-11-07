@@ -96,7 +96,7 @@ def chat_web():
     globals()["btn3"] = st.sidebar.empty()
     with globals()["btn3"]:
         if st.button(label=st.session_state.lists[2], use_container_width=True, key='btn3'):
-            button_callback2
+            button_callback2()
 
     hello()
     chat()
@@ -169,8 +169,7 @@ def chat():
                     button_callback1()
             with globals()["btn3"]:
                 if st.button(label=st.session_state.lists[2], use_container_width=True, key='btn6'):
-                    button_callback2
-            st.experimental_rerun()
+                    button_callback2()
                 
 
 
