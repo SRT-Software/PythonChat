@@ -62,12 +62,14 @@ def hello():
         st.title("提示")
         option = st.selectbox(
             'How would you like to be contacted?',
-            (globals()["new_list"][0], globals()["new_list"][1], globals()["new_list"][2]), index=None,
+            (globals()["new_list"][0], globals()["new_list"][1], globals()["new_list"][2]),
+            index=None,
             placeholder="选择对应的提示",
         )
-
-        if option is not None:
-            st.session_state.prompt = option
+        print(type(option))
+        #
+        # if option is not None:
+        #     st.session_state.prompt = option
     st.toast("🎈 侧边栏为问答提示")
 
 
