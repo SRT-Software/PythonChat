@@ -9,6 +9,10 @@ QA_TEMPLATE = 'You are a helpful AI assistant. Use the following pieces of conte
               'Question: {}' \
               'Helpful answer in markdown in Chinese:'
 
+QUES_TEMPLATE = 'make 3 relative questions with {}'\
+                'git me the answers in Chinese'\
+                'the format is [question1, question2, question3]'
+
 
 def chatbot(ques):
     print(ques)
@@ -24,6 +28,18 @@ def chatbot(ques):
     )
     return response, source_list, text_list
 
+def relative_ques(ques):
+    response = zhipuai.model_api.sse_invoke(
+        model="chatglm_pro",
+        prompt=[
+            {"role": "user", "content": },
+        ],
+        temperature=0.95,
+        top_p=0.7,
+        incremental=True
+    )
+    print(response)
+    return []
 
 if __name__ == '__main__':
     chatbot()

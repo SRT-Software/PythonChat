@@ -1,5 +1,5 @@
 import streamlit as st
-from chat import chatbot
+from chat import chatbot, relative_ques
 from enum import Enum
 from config.User import User, default_user
 import random
@@ -52,12 +52,14 @@ def chat_web():
     with st.sidebar:
         random_question()
         st.title("提示")
-        st.session_state.prompt = st.selectbox(
+        option = st.selectbox(
             'How would you like to be contacted?',
             (globals()["new_list"][0], globals()["new_list"][1], globals()["new_list"][2]),
             index=None,
             placeholder="选择对应的提示",
         )
+        if option:
+            st.session_state.prompt = option
         print(st.session_state.prompt)
 
     st.toast("🎈 侧边栏为问答提示")
@@ -118,7 +120,10 @@ def chat():
                         st.markdown(texts[i])
             except Exception as e:
                 st.markdown(str(e))
+            new_list = relative_ques(st.session_state.prompt)
             st.session_state.prompt = None
+
+
                     
 
 
