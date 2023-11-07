@@ -49,6 +49,16 @@ def chat_web():
         unsafe_allow_html=True
     )
     st.markdown('<div class="title">Chat</div>', unsafe_allow_html=True)
+    with st.sidebar:
+        random_question()
+        st.title("提示")
+        st.session_state.prompt = st.selectbox(
+            'How would you like to be contacted?',
+            (globals()["new_list"][0], globals()["new_list"][1], globals()["new_list"][2]),
+            index=None,
+            placeholder="选择对应的提示",
+        )
+
     st.toast("🎈 侧边栏为问答提示")
     hello()
     chat()
@@ -57,19 +67,6 @@ def chat_web():
 def hello():
     with st.chat_message("assistant"):
         st.write("你好 👋")
-
-    with st.sidebar:
-        random_question()
-        st.title("提示")
-        option = st.selectbox(
-            'How would you like to be contacted?',
-            (globals()["new_list"][0], globals()["new_list"][1], globals()["new_list"][2]),
-            index=None,
-            placeholder="选择对应的提示",
-        )
-
-        if option is not None:
-            st.session_state.prompt = option
 
 
 def chat():
@@ -95,7 +92,7 @@ def chat():
             st.markdown(message["content"])
 
     st.session_state.prompt = st.chat_input("请输入聊天内容")
-    if st.session_state.prompt != '':
+    if st.session_state.prompt is not None:
         # Add user message to chat history
         st.session_state.messages.append({"role": "user", "content": st.session_state.prompt})
         # Display user message in chat message container
@@ -137,7 +134,7 @@ if __name__ == '__main__':
         st.session_state.index = 1
 
     if 'option' not in st.session_state:
-        st.session_state.prompt = ''
+        st.session_state.prompt = None
     demo_name = pages_name_index[st.session_state.index]
     pages_name_func[demo_name]()
 
