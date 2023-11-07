@@ -38,7 +38,11 @@ def relative_ques(ques):
         top_p=0.7,
         incremental=True
     )
-    print(response['data'])
+    data = ''
+    for event in response.events():
+        data += event.data
+
+    print('data ', data)
     return []
 
 if __name__ == '__main__':
