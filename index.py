@@ -53,11 +53,11 @@ def chat_web():
     with st.sidebar:
         st.title("提示")
         print("buttons: ", st.session_state.lists)
-        if st.button(label=st.session_state.lists[0]):
+        if st.button(label=st.session_state.lists[0], use_container_width=True, key=1):
             st.session_state.prompt = st.session_state.lists[0]
-        if st.button(label=st.session_state.lists[1]):
+        if st.button(label=st.session_state.lists[1], use_container_width=True, key=2):
             st.session_state.prompt = st.session_state.lists[1]
-        if st.button(label=st.session_state.lists[2]):
+        if st.button(label=st.session_state.lists[2], use_container_width=True, key=3):
             st.session_state.prompt = st.session_state.lists[2]
 
 
@@ -119,11 +119,11 @@ def chat():
             st.session_state.lists = relative_ques(st.session_state.prompt)
             st.session_state.prompt = None
             with st.sidebar:
-                if st.button(label=st.session_state.lists[0]):
+                if st.button(label=st.session_state.lists[0], use_container_width=True, key=4):
                     st.session_state.prompt = st.session_state.lists[0]
-                if st.button(label=st.session_state.lists[1]):
+                if st.button(label=st.session_state.lists[1], use_container_width=True, key=5):
                     st.session_state.prompt = st.session_state.lists[1]
-                if st.button(label=st.session_state.lists[2]):
+                if st.button(label=st.session_state.lists[2], use_container_width=True, key=6):
                     st.session_state.prompt = st.session_state.lists[2]
                 
 
