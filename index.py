@@ -11,17 +11,6 @@ def random_question():
     globals()["new_list"] = random.sample(question_list, 3)
 
 
-with st.sidebar:
-    random_question()
-    st.title("提示")
-    option = st.selectbox(
-        'How would you like to be contacted?',
-        (globals()["new_list"][0], globals()["new_list"][1], globals()["new_list"][2]), index=None)
-
-    if option:
-        st.session_state.prompt = option
-
-
 def change_web(attrs1, attrs2):
     if attrs1 == attrs2:
         st.success("登录成功！")
@@ -67,6 +56,18 @@ def chat_web():
 def hello():
     with st.chat_message("assistant"):
         st.write("你好 👋")
+
+    with st.sidebar:
+        random_question()
+        st.title("提示")
+        option = st.selectbox(
+            'How would you like to be contacted?',
+            (globals()["new_list"][0], globals()["new_list"][1], globals()["new_list"][2]), index=None,
+            placeholder="选择对应的提示",
+        )
+
+        if option:
+            st.session_state.prompt = option
     st.toast("🎈 侧边栏为问答提示")
 
 
