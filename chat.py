@@ -9,10 +9,10 @@ QA_TEMPLATE = 'You are a helpful AI assistant. Use the following pieces of conte
               'Question: {}' \
               'Helpful answer in markdown in Chinese:'
 
-QUES_TEMPLATE = 'make 3 relative questions with {}'\
-                'give me the answer in Chinese'\
+QUES_TEMPLATE = 'make 3 relative questions about {}'\
                 'the answer\'s format is [question1@ question2@ question3]'\
-                'do not answer the ques, you can only give me [question1@ question2@ question3]'
+                'do not answer the question, you can only give me [question1@ question2@ question3]'\
+                'you must replace the question1 question2 question with the real question you provide in Chinese'
 
 
 def chatbot(ques):
