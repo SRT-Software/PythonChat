@@ -41,17 +41,17 @@ def login_web():
 def button_callback0():
     st.session_state.prompt = st.session_state.lists[0]
     st.toast('正在生成提示词', icon='🎈')
-    st.rerun()
+    st.experimental_rerun()
 
 def button_callback1():
     st.session_state.prompt = st.session_state.lists[1]
     st.toast('正在生成提示词', icon='🎈')
-    st.rerun()
+    st.experimental_rerun()
 
 def button_callback2():
     st.session_state.prompt = st.session_state.lists[2]
     st.toast('正在生成提示词', icon='🎈')
-    st.rerun()
+    st.experimental_rerun()
 
 
 def chat_web():
