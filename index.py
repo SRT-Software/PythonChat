@@ -108,21 +108,21 @@ def hello():
 
 
 def chat():
-    st.markdown(
-        """
-        <style>
-        .tips {
-            position: fixed;
-            font-size: 20px;
-            top: 50px;
-            left:5px;
-            writing-mode: vertical-rl;
-        }
-        </style>
-        """,
-        unsafe_allow_html=True
-    )
-    st.markdown('<div class="tips">TIPS</div>', unsafe_allow_html=True)
+    # st.markdown(
+    #     """
+    #     <style>
+    #     .tips {
+    #         position: fixed;
+    #         font-size: 20px;
+    #         top: 50px;
+    #         left:5px;
+    #         writing-mode: vertical-rl;
+    #     }
+    #     </style>
+    #     """,
+    #     unsafe_allow_html=True
+    # )
+    # st.markdown('<div class="tips">TIPS</div>', unsafe_allow_html=True)
     if "messages" not in st.session_state:
         st.session_state.messages = []
 
@@ -175,10 +175,10 @@ def chat():
             st.session_state.cnt = 1
 
     if st.session_state.newinfo == 1:
-        with st.expander('参考材料'):
-            for i in range(len(st.session_state.source)):
-                expander_text = 'file: {}, page: {}'.format(st.session_state.source[i][0], int(st.session_state.source[i][1]))
-                st.markdown(expander_text)
+        st.session_state.source = st.session_state.source[0:3]
+        for i in range(len(st.session_state.source)):
+            expander_text = 'file: {}, page: {}'.format(st.session_state.source[i][0], int(st.session_state.source[i][1]))
+            with st.expander(expander_text):
                 st.markdown(st.session_state.text[i])
     if st.session_state.cnt == 1:
         st.session_state.cnt = 0
