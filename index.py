@@ -5,7 +5,6 @@ from config.User import User, default_user
 import random
 
 question_list = ['脚手架的操作规范', 
-                 '矿井内氧气含量过低怎么办', 
                  '遭遇恶劣天气应该如何处理',
                  '申报中国电力优质工程的条件',
                  '安全质量部的工作是什么',
