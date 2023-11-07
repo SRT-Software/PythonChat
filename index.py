@@ -135,7 +135,6 @@ def chat():
     print('prompt: ', st.session_state.prompt)
     if st.session_state.prompt is not None:
         st.session_state.source = []
-        st.session_state.newinfo = 0
         # Add user message to chat history
         # Add user message to chat history
         st.session_state.messages.append({"role": "user", "content": st.session_state.prompt})
