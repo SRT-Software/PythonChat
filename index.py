@@ -7,6 +7,9 @@ import random
 question_list = ['脚手架的操作规范', '矿井内氧气含量过低怎么办', '遭遇恶劣天气应该如何处理']
 
 new_list = []
+btn1 = None
+btn2 = None
+btn3 = None
 
 def random_question():
     st.session_state.lists = random.sample(question_list, 3)
@@ -53,13 +56,16 @@ def chat_web():
     with st.sidebar:
         st.title("提示")
         print("buttons: ", st.session_state.lists)
-        if st.button(label=st.session_state.lists[0], use_container_width=True, key=1):
+        btn1 = st.button(label=st.session_state.lists[0], use_container_width=True, key=1)
+        if btn1:
             st.session_state.prompt = st.session_state.lists[0]
             st.toast('正在生成提示词', icon='🎈')
-        if st.button(label=st.session_state.lists[1], use_container_width=True, key=2):
+        btn2 = st.button(label=st.session_state.lists[1], use_container_width=True, key=2)
+        if btn2:
             st.session_state.prompt = st.session_state.lists[1]
             st.toast('正在生成提示词', icon='🎈')
-        if st.button(label=st.session_state.lists[2], use_container_width=True, key=3):
+        btn3 = st.button(label=st.session_state.lists[2], use_container_width=True, key=3)
+        if btn3:
             st.session_state.prompt = st.session_state.lists[2]
             st.toast('正在生成提示词', icon='🎈')
 
@@ -121,18 +127,13 @@ def chat():
         #             st.markdown(texts[i])
             st.session_state.lists = relative_ques(st.session_state.prompt)
             st.session_state.prompt = None
-            with st.sidebar:
-                if st.button(label=st.session_state.lists[0], use_container_width=True, key=4):
-                    st.session_state.prompt = st.session_state.lists[0]
-                    # st.toast('正在生成提示词', icon='🎈')
-                if st.button(label=st.session_state.lists[1], use_container_width=True, key=5):
-                    st.session_state.prompt = st.session_state.lists[1]
-                    # st.toast('正在生成提示词', icon='🎈')
-                if st.button(label=st.session_state.lists[2], use_container_width=True, key=6):
-                    st.session_state.prompt = st.session_state.lists[2]
-                    # st.toast('正在生成提示词', icon='🎈')
-                st.toast('提示词生成完毕', icon='🎈')
-                
+            btn1.label = st.session_state.lists[0]
+            btn1.event(None)
+            btn2.label = st.session_state.lists[1]
+            btn2.event(None)
+            btn3.label = st.session_state.lists[2]
+            btn3.event(None)
+
 
 
 pages_name_func = {
