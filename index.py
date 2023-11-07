@@ -58,9 +58,8 @@ def chat_web():
             index=None,
             placeholder="选择对应的提示",
         )
-        if option:
-            st.session_state.prompt = option
-        print(st.session_state.prompt)
+        print("option ", option)
+        st.session_state.prompt = option
 
     st.toast("🎈 侧边栏为问答提示")
     hello()

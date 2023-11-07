@@ -38,7 +38,7 @@ def relative_ques(ques):
         top_p=0.7,
         incremental=True
     )
-    print(response)
+    print(response['data'])
     return []
 
 if __name__ == '__main__':
