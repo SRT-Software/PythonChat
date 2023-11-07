@@ -152,7 +152,7 @@ def chat():
             st.session_state.messages.append({"role": "assistant", "content": full_response})
             st.session_state.source = sources
             st.session_state.text = texts
-            with st.container:
+            with st.container():
                 for i in range(len(st.session_state.source)):
                     expander_text = 'file: {}, page: {}'.format(st.session_state.source[i][0], int(st.session_state.source[i][1]))
                     with st.expander(expander_text):
