@@ -2,6 +2,24 @@ import streamlit as st
 from chat import chatbot
 from enum import Enum
 from config.User import User, default_user
+import random
+
+question_list = ['脚手架的操作规范', '矿井内氧气含量过低怎么办', '遭遇恶劣天气应该如何处理']
+new_list = []
+
+def random_question():
+    globals()["new_list"] = random.sample(question_list, 3)
+
+
+with st.sidebar:
+    random_question()
+    st.title("提示")
+    option = st.selectbox(
+        'How would you like to be contacted?',
+        (globals()["new_list"][0], globals()["new_list"][1], globals()["new_list"][2]))
+
+    if option:
+        st.session_state.prompt = option
 
 
 def change_web(attrs1, attrs2):
@@ -49,6 +67,7 @@ def chat_web():
 def hello():
     with st.chat_message("assistant"):
         st.write("你好 👋")
+    st.toast("🎈 侧边栏为问答提示")
 
 
 def chat():
@@ -75,17 +94,18 @@ def chat():
         with st.chat_message(message["role"]):
             st.markdown(message["content"])
 
-    if prompt := st.chat_input("请输入聊天内容"):
+    st.session_state.prompt = st.chat_input("请输入聊天内容")
+    if st.session_state.prompt != '':
         # Add user message to chat history
-        st.session_state.messages.append({"role": "user", "content": prompt})
+        st.session_state.messages.append({"role": "user", "content": st.session_state.prompt})
         # Display user message in chat message container
         with st.chat_message("user"):
-            st.markdown(prompt)
+            st.markdown(st.session_state.prompt)
         # Display assistant response in chat message container
         with st.chat_message("assistant"):
             message_placeholder = st.empty()
             full_response = ""
-            response, sources, texts = chatbot(prompt)
+            response, sources, texts = chatbot(st.session_state.prompt)
             for event in response.events():
                 full_response += event.data
                 message_placeholder.markdown(full_response + " ")
@@ -95,6 +115,7 @@ def chat():
                 expander_text = 'file: {}, page: {}'.format(sources[i][0], int(sources[i][1]))
                 with st.expander(expander_text):
                     st.markdown(texts[i])
+            st.session_state.prompt = ''
                     
 
 
@@ -111,6 +132,9 @@ pages_name_index = {
 if __name__ == '__main__':
     if 'index' not in st.session_state:
         st.session_state.index = 1
+
+    if 'option' not in st.session_state:
+        st.session_state.prompt = ''
     demo_name = pages_name_index[st.session_state.index]
     pages_name_func[demo_name]()
 
