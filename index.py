@@ -178,8 +178,9 @@ def chat():
         with st.expander("参考材料"):
             for i in range(len(st.session_state.source)):
                 expander_text = 'file: {}, page: {}'.format(st.session_state.source[i][0], int(st.session_state.source[i][1]))
-                with st.expander(expander_text):
-                    st.markdown(st.session_state.text[i])
+                st.markdown(expander_text)
+                st.markdown(st.session_state.text[i])
+                st.divider()
     if st.session_state.cnt == 1:
         st.session_state.cnt = 0
         st.experimental_rerun()
