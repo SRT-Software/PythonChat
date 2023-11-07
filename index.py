@@ -151,10 +151,13 @@ def chat():
             message_placeholder.markdown(full_response)
             st.session_state.messages.append({"role": "assistant", "content": full_response})
             st.session_state.source = sources
+            st.session_state.text = texts
+            print(st.session_state.source)
+            print(st.session_state.text)
             for i in range(len(st.session_state.source)):
                 expander_text = 'file: {}, page: {}'.format(st.session_state.source[i][0], int(st.session_state.source[i][1]))
                 with st.expander(expander_text):
-                    st.markdown(texts[i])
+                    st.markdown(st.session_state.text[i])
             random_question()
             # st.session_state.lists = []
             # st.session_state.lists.append(relative_ques(full_response))
@@ -198,6 +201,9 @@ if __name__ == '__main__':
 
     if 'source' not in st.session_state:
         st.session_state.source = ''
+
+    if 'text' not in st.session_state:
+        st.session_state.text = ''
     
     print("lists:", st.session_state.lists)
     demo_name = pages_name_index[st.session_state.index]
