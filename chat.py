@@ -7,7 +7,7 @@ QA_TEMPLATE = 'You are a helpful AI assistant. Use the following pieces of conte
               'question is not related to the context, politely respond that you are tuned to only answer questions ' \
               'that are related to the context.{}' \
               'Question: {}' \
-              'Helpful answer in markdown:'
+              'Helpful answer in markdown in Chinese:'
 
 
 def chatbot(ques):
