@@ -154,17 +154,18 @@ def chat():
                 expander_text = 'file: {}, page: {}'.format(sources[i][0], int(sources[i][1]))
                 with st.expander(expander_text):
                     st.markdown(texts[i])
-            random_question()
+            st.session_state.lists = []
+            st.session_state.lists.append(relative_ques(full_response))
+            st.session_state.lists.append(relative_ques(full_response))
+            st.session_state.lists.append(relative_ques(full_response))
             st.session_state.prompt = None
             print("buttons: ", st.session_state.lists)
             with globals()["btn1"]:
                 if st.button(label=st.session_state.lists[0], use_container_width=True, key='btn4'):
                     button_callback0()
-            globals()["btn2"] = st.sidebar.empty()
             with globals()["btn2"]:
                 if st.button(label=st.session_state.lists[1], use_container_width=True, key='btn5'):
                     button_callback1()
-            globals()["btn3"] = st.sidebar.empty()
             with globals()["btn3"]:
                 if st.button(label=st.session_state.lists[2], use_container_width=True, key='btn6'):
                     button_callback2
