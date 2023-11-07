@@ -49,6 +49,7 @@ def chat_web():
         unsafe_allow_html=True
     )
     st.markdown('<div class="title">Chat</div>', unsafe_allow_html=True)
+    st.toast("🎈 侧边栏为问答提示")
     hello()
     chat()
 
@@ -66,11 +67,9 @@ def hello():
             index=None,
             placeholder="选择对应的提示",
         )
-        print(type(option))
-        #
-        # if option is not None:
-        #     st.session_state.prompt = option
-    st.toast("🎈 侧边栏为问答提示")
+
+        if option is not None:
+            st.session_state.prompt = option
 
 
 def chat():
@@ -106,16 +105,19 @@ def chat():
         with st.chat_message("assistant"):
             message_placeholder = st.empty()
             full_response = ""
-            response, sources, texts = chatbot(st.session_state.prompt)
-            for event in response.events():
-                full_response += event.data
-                message_placeholder.markdown(full_response + " ")
-            message_placeholder.markdown(full_response)
-            st.session_state.messages.append({"role": "assistant", "content": full_response})
-            for i in range(len(sources)):
-                expander_text = 'file: {}, page: {}'.format(sources[i][0], int(sources[i][1]))
-                with st.expander(expander_text):
-                    st.markdown(texts[i])
+            try:
+                response, sources, texts = chatbot(st.session_state.prompt)
+                for event in response.events():
+                    full_response += event.data
+                    message_placeholder.markdown(full_response + " ")
+                message_placeholder.markdown(full_response)
+                st.session_state.messages.append({"role": "assistant", "content": full_response})
+                for i in range(len(sources)):
+                    expander_text = 'file: {}, page: {}'.format(sources[i][0], int(sources[i][1]))
+                    with st.expander(expander_text):
+                        st.markdown(texts[i])
+            except Exception as e:
+                st.markdown(str(e))
             st.session_state.prompt = ''
                     
 

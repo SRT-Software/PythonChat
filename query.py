@@ -12,13 +12,25 @@ from pymilvus import (
     Collection,
 )
 import numpy as np
+import time
 
 
 def match_query(ques, database="pinecone"):
-    embedding = zhipuai.model_api.invoke(
-        model="text_embedding",
-        prompt=ques
-    )['data']['embedding']
+    idx = 0
+    try:
+        while True:
+            idx += 1
+            embedding = zhipuai.model_api.invoke(
+                model="text_embedding",
+                prompt=ques
+            )['data']['embedding']
+            break
+    except Exception as e:
+        print(e)
+        time.sleep(0.5)
+        if idx >= 10:
+            raise e
+
     text_list = []
     source_list = []
     if database == "pinecone":
