@@ -51,14 +51,13 @@ def chat_web():
     with st.sidebar:
         random_question()
         st.title("提示")
-        option = st.selectbox(
-            '选择提示问题',
-            options=st.session_state.lists,
-            placeholder="选择对应的提示",
-        )
+        if st.button(label=st.session_state.lists[0]):
+            st.session_state.prompt = st.session_state.lists[0]
+        if st.button(label=st.session_state.lists[1]):
+            st.session_state.prompt = st.session_state.lists[1]
+        if st.button(label=st.session_state.lists[1]):
+            st.session_state.prompt = st.session_state.lists[1]
 
-        if option:
-            st.session_state.prompt = option
 
     hello()
     chat()
