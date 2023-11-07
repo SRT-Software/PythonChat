@@ -117,19 +117,19 @@ def chat():
         with st.chat_message("user"):
             st.markdown(prompt)
         # Display assistant response in chat message container
-        # with st.chat_message("assistant"):
-        #     message_placeholder = st.empty()
-        #     full_response = ""
-        #     response, sources, texts = chatbot(prompt)
-        #     for event in response.events():
-        #         full_response += event.data
-        #         message_placeholder.markdown(full_response + " ")
-        #     message_placeholder.markdown(full_response)
-        #     st.session_state.messages.append({"role": "assistant", "content": full_response})
-        #     for i in range(len(sources)):
-        #         expander_text = 'file: {}, page: {}'.format(sources[i][0], int(sources[i][1]))
-        #         with st.expander(expander_text):
-        #             st.markdown(texts[i])
+        with st.chat_message("assistant"):
+            message_placeholder = st.empty()
+            full_response = ""
+            response, sources, texts = chatbot(prompt)
+            for event in response.events():
+                full_response += event.data
+                message_placeholder.markdown(full_response + " ")
+            message_placeholder.markdown(full_response)
+            st.session_state.messages.append({"role": "assistant", "content": full_response})
+            for i in range(len(sources)):
+                expander_text = 'file: {}, page: {}'.format(sources[i][0], int(sources[i][1]))
+                with st.expander(expander_text):
+                    st.markdown(texts[i])
             st.session_state.lists = relative_ques(st.session_state.prompt)
             st.session_state.prompt = None
             print("buttons: ", st.session_state.lists)
