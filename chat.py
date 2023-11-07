@@ -10,8 +10,8 @@ QA_TEMPLATE = 'You are a helpful AI assistant. Use the following pieces of conte
               'Helpful answer in markdown in Chinese:'
 
 QUES_TEMPLATE = 'make 3 relative questions with {}'\
-                'git me the answers in Chinese'\
-                'the format is [question1, question2, question3]'
+                'give me the answer in Chinese'\
+                'the answer\'s format is [question1, question2, question3]'
 
 
 def chatbot(ques):
@@ -45,6 +45,7 @@ def relative_ques(ques):
     datas = data.replace('[', '').replace(']', '').split(',')
     print(data)
     return datas
+
 
 if __name__ == '__main__':
     chatbot()
