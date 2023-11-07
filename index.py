@@ -90,8 +90,9 @@ def chat():
     for message in st.session_state.messages:
         with st.chat_message(message["role"]):
             st.markdown(message["content"])
-    if st.session_state.prompt is None:
-        st.session_state.prompt = st.chat_input("请输入聊天内容")
+    prompt = st.chat_input("请输入聊天内容")
+    if prompt is not None:
+        st.session_state.prompt = prompt
     if st.session_state.prompt is not None:
         # Add user message to chat history
         st.session_state.messages.append({"role": "user", "content": st.session_state.prompt})
