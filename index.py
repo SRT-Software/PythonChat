@@ -134,6 +134,7 @@ def chat():
         st.session_state.prompt = prompt
     print('prompt: ', st.session_state.prompt)
     if st.session_state.prompt is not None:
+        st.session_state.newinfo = 0
         # Add user message to chat history
         # Add user message to chat history
         st.session_state.messages.append({"role": "user", "content": st.session_state.prompt})
@@ -172,10 +173,13 @@ def chat():
                 if st.button(label=st.session_state.lists[2], use_container_width=True, key='btn6'):
                     button_callback2()
             st.session_state.cnt = 1
-    for i in range(len(st.session_state.source)):
-        expander_text = 'file: {}, page: {}'.format(st.session_state.source[i][0], int(st.session_state.source[i][1]))
-        with st.expander(expander_text):
-            st.markdown(st.session_state.text[i])
+            st.session_state.newinfo = 1
+            
+    if st.session_state.newinfo == 1:
+        for i in range(len(st.session_state.source)):
+            expander_text = 'file: {}, page: {}'.format(st.session_state.source[i][0], int(st.session_state.source[i][1]))
+            with st.expander(expander_text):
+                st.markdown(st.session_state.text[i])
     if st.session_state.cnt == 1:
         st.session_state.cnt = 0
         st.experimental_rerun()
@@ -212,6 +216,9 @@ if __name__ == '__main__':
 
     if 'cnt' not in st.session_state:
         st.session_state.cnt = 0
+    
+    if 'newinfo' not in st.session_state:
+        st.session_state.newinfo = 1
     
     print("lists:", st.session_state.lists)
     demo_name = pages_name_index[st.session_state.index]
