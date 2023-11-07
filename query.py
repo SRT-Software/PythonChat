@@ -15,6 +15,7 @@ import numpy as np
 
 
 def match_query(ques, database="pinecone"):
+    print('ques:', ques)
     result = zhipuai.model_api.invoke(
         model="text_embedding",
         prompt=ques
