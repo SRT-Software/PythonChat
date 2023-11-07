@@ -49,7 +49,6 @@ def chat_web():
     )
     st.markdown('<div class="title">Chat</div>', unsafe_allow_html=True)
     with st.sidebar:
-        random_question()
         st.title("提示")
         if st.button(label=st.session_state.lists[0]):
             st.session_state.prompt = st.session_state.lists[0]
@@ -140,6 +139,7 @@ if __name__ == '__main__':
 
     if 'lists' not in st.session_state:
         st.session_state.lists = []
+    random_question()
     demo_name = pages_name_index[st.session_state.index]
     pages_name_func[demo_name]()
 
