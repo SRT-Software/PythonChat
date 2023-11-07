@@ -11,7 +11,8 @@ QA_TEMPLATE = 'You are a helpful AI assistant. Use the following pieces of conte
 
 QUES_TEMPLATE = 'make 3 relative questions with {}'\
                 'give me the answer in Chinese'\
-                'the answer\'s format is [question1, question2, question3]'
+                'the answer\'s format is [question1, question2, question3]'\
+                'you just only need give me [question1, question2, question3]'
 
 
 def chatbot(ques):
