@@ -171,12 +171,14 @@ def chat():
             with globals()["btn3"]:
                 if st.button(label=st.session_state.lists[2], use_container_width=True, key='btn6'):
                     button_callback2()
+            st.session_state.cnt = 1
     for i in range(len(st.session_state.source)):
         expander_text = 'file: {}, page: {}'.format(st.session_state.source[i][0], int(st.session_state.source[i][1]))
         with st.expander(expander_text):
             st.markdown(st.session_state.text[i])
-    st.session_state.source = []
-    st.experimental_rerun()
+    if st.session_state.cnt == 1:
+        st.experimental_rerun()
+        st.session_state.cnt = 0
                 
 
 
@@ -206,6 +208,9 @@ if __name__ == '__main__':
 
     if 'text' not in st.session_state:
         st.session_state.text = []
+
+    if 'cnt' not in st.session_state:
+        st.session_state.cnt = 0
     
     print("lists:", st.session_state.lists)
     demo_name = pages_name_index[st.session_state.index]
