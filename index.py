@@ -55,8 +55,8 @@ def chat_web():
             st.session_state.prompt = st.session_state.lists[0]
         if st.button(label=st.session_state.lists[1]):
             st.session_state.prompt = st.session_state.lists[1]
-        if st.button(label=st.session_state.lists[1]):
-            st.session_state.prompt = st.session_state.lists[1]
+        if st.button(label=st.session_state.lists[2]):
+            st.session_state.prompt = st.session_state.lists[2]
 
 
     hello()
