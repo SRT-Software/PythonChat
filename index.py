@@ -54,9 +54,10 @@ def chat_web():
         unsafe_allow_html=True
     )
     st.markdown('<div class="title">Chat</div>', unsafe_allow_html=True)
+    with st.sidebar:
+        st.title("提示")
     globals()["siderbar"] = st.sidebar.empty()
     with globals()["siderbar"]:
-        st.title("提示")
         print("buttons: ", st.session_state.lists)
         globals()["btn0"] = st.button(label=st.session_state.lists[0], use_container_width=True, key='btn1')
         if globals()["btn0"]:
