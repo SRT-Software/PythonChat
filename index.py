@@ -16,7 +16,7 @@ with st.sidebar:
     st.title("提示")
     option = st.selectbox(
         'How would you like to be contacted?',
-        (globals()["new_list"][0], globals()["new_list"][1], globals()["new_list"][2]))
+        (globals()["new_list"][0], globals()["new_list"][1], globals()["new_list"][2]), index=None)
 
     if option:
         st.session_state.prompt = option
@@ -71,8 +71,6 @@ def hello():
 
 
 def chat():
-    with st.sidebar:
-        st.button("111")
     st.markdown(
         """
         <style>
