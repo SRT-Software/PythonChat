@@ -30,7 +30,7 @@ def chatbot(ques):
 
 def relative_ques(ques):
     response = zhipuai.model_api.sse_invoke(
-        model="chatglm_pro",
+        model="chatglm_turbo",
         prompt=[
             {"role": "user", "content": QUES_TEMPLATE.format(ques)},
         ],
