@@ -6,6 +6,8 @@ import random
 
 question_list = ['脚手架的操作规范', '矿井内氧气含量过低怎么办', '遭遇恶劣天气应该如何处理']
 
+new_list = []
+
 def random_question():
     st.session_state.lists = random.sample(question_list, 3)
 
@@ -114,7 +116,7 @@ def chat():
         #         expander_text = 'file: {}, page: {}'.format(sources[i][0], int(sources[i][1]))
         #         with st.expander(expander_text):
         #             st.markdown(texts[i])
-            st.session_state.lists = relative_ques(st.session_state.prompt)
+            globals()["new_list"] = relative_ques(st.session_state.prompt)
             st.session_state.prompt = None
 
 
@@ -139,8 +141,9 @@ if __name__ == '__main__':
         st.session_state.prompt = None
 
     if 'lists' not in st.session_state:
-        st.session_state.lists = []
-    random_question()
+        st.session_state.lists =  random.sample(question_list, 3)
+    else:
+        st.session_state.lists =  globals()["new_list"]
     demo_name = pages_name_index[st.session_state.index]
     pages_name_func[demo_name]()
 
