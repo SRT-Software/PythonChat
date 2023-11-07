@@ -112,15 +112,15 @@ def chat():
     if st.session_state.prompt is not None:
         # Add user message to chat history
         # Add user message to chat history
-        st.session_state.messages.append({"role": "user", "content": prompt})
+        st.session_state.messages.append({"role": "user", "content": st.session_state.prompt})
         # Display user message in chat message container
         with st.chat_message("user"):
-            st.markdown(prompt)
+            st.markdown(st.session_state.prompt)
         # Display assistant response in chat message container
         with st.chat_message("assistant"):
             message_placeholder = st.empty()
             full_response = ""
-            response, sources, texts = chatbot(prompt)
+            response, sources, texts = chatbot(st.session_state.prompt)
             for event in response.events():
                 full_response += event.data
                 message_placeholder.markdown(full_response + " ")
