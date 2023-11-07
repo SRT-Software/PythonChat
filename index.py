@@ -57,8 +57,7 @@ def chat_web():
             index=None,
             placeholder="选择对应的提示",
         )
-        if option:
-            st.session_state.prompt = option
+
     hello()
     chat()
 
@@ -114,7 +113,7 @@ def chat():
         #         expander_text = 'file: {}, page: {}'.format(sources[i][0], int(sources[i][1]))
         #         with st.expander(expander_text):
         #             st.markdown(texts[i])
-            new_list = relative_ques(st.session_state.prompt)
+            st.session_state.lists = relative_ques(st.session_state.prompt)
             st.session_state.prompt = None
 
 
