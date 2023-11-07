@@ -15,10 +15,12 @@ import numpy as np
 
 
 def match_query(ques, database="pinecone"):
-    embedding = zhipuai.model_api.invoke(
+    result = zhipuai.model_api.invoke(
         model="text_embedding",
         prompt=ques
-    )['data']['embedding']
+    )
+    print(result['code'], result['msg'])
+    embedding = result['data']['embedding']
     text_list = []
     source_list = []
     if database == "pinecone":
