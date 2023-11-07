@@ -66,7 +66,7 @@ def hello():
             placeholder="选择对应的提示",
         )
 
-        if option:
+        if option is not None:
             st.session_state.prompt = option
     st.toast("🎈 侧边栏为问答提示")
 
