@@ -50,6 +50,7 @@ def chat_web():
     st.markdown('<div class="title">Chat</div>', unsafe_allow_html=True)
     with st.sidebar:
         st.title("提示")
+        print("buttons: ", st.session_state.lists)
         if st.button(label=st.session_state.lists[0]):
             st.session_state.prompt = st.session_state.lists[0]
         if st.button(label=st.session_state.lists[1]):
