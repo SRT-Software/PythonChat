@@ -53,7 +53,7 @@ def chat_web():
         st.title("提示")
         option = st.selectbox(
             '选择提示问题',
-            (st.session_state.lists[0], st.session_state.lists[1], st.session_state.lists[2]),
+            options=st.session_state.lists,
             index=None,
             placeholder="选择对应的提示",
         )
