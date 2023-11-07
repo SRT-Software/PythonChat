@@ -118,6 +118,13 @@ def chat():
         #             st.markdown(texts[i])
             st.session_state.lists = relative_ques(st.session_state.prompt)
             st.session_state.prompt = None
+            with st.sidebar:
+                if st.button(label=st.session_state.lists[0]):
+                    st.session_state.prompt = st.session_state.lists[0]
+                if st.button(label=st.session_state.lists[1]):
+                    st.session_state.prompt = st.session_state.lists[1]
+                if st.button(label=st.session_state.lists[2]):
+                    st.session_state.prompt = st.session_state.lists[2]
                 
 
 
