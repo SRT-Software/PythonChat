@@ -42,8 +42,8 @@ def relative_ques(ques):
     for event in response.events():
         data += event.data
 
-    print('data ', data)
-    return []
+    datas = data.replace('[', '').replace(']', '').split(',')
+    return datas
 
 if __name__ == '__main__':
     chatbot()
