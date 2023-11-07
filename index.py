@@ -117,6 +117,7 @@ def chat():
         #         with st.expander(expander_text):
         #             st.markdown(texts[i])
             globals()["new_list"] = relative_ques(st.session_state.prompt)
+            print(globals()["new_list"])
             st.session_state.prompt = None
 
 
