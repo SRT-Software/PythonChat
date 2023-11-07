@@ -10,6 +10,7 @@ new_list = []
 btn0 = None
 btn1 = None
 btn2 = None
+siderbar = None
 
 def random_question():
     st.session_state.lists = random.sample(question_list, 3)
@@ -53,7 +54,8 @@ def chat_web():
         unsafe_allow_html=True
     )
     st.markdown('<div class="title">Chat</div>', unsafe_allow_html=True)
-    with st.sidebar:
+    globals()["siderbar"] = st.sidebar.empty()
+    with siderbar:
         st.title("提示")
         print("buttons: ", st.session_state.lists)
         globals()["btn0"] = st.button(label=st.session_state.lists[0], use_container_width=True, key='btn1')
@@ -127,15 +129,16 @@ def chat():
         #             st.markdown(texts[i])
             st.session_state.lists = relative_ques(st.session_state.prompt)
             st.session_state.prompt = None
-            btn_obj = st.session_state.btn1
-            btn_obj.label = st.session_state.lists[0]
-            btn_obj()
-            btn_obj = st.session_state.btn2
-            btn_obj.label = st.session_state.lists[1]
-            btn_obj()
-            btn_obj = st.session_state.btn3
-            btn_obj.label = st.session_state.lists[2]
-            btn_obj()
+            with globals()["siderbar"]:
+                btn_obj = st.session_state.btn1
+                btn_obj.label = st.session_state.lists[0]
+                btn_obj()
+                btn_obj = st.session_state.btn2
+                btn_obj.label = st.session_state.lists[1]
+                btn_obj()
+                btn_obj = st.session_state.btn3
+                btn_obj.label = st.session_state.lists[2]
+                btn_obj()
 
 
 
