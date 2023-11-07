@@ -131,6 +131,7 @@ def chat():
                 if st.button(label=st.session_state.lists[2], use_container_width=True, key=6):
                     st.session_state.prompt = st.session_state.lists[2]
                     # st.toast('正在生成提示词', icon='🎈')
+                st.toast('提示词生成完毕', icon='🎈')
                 
 
 
