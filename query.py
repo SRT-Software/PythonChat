@@ -19,6 +19,7 @@ def match_query(ques, database="pinecone"):
         model="text_embedding",
         prompt=ques
     )['data']['embedding']
+    print(embedding)
     text_list = []
     source_list = []
     if database == "pinecone":

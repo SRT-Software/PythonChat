@@ -17,7 +17,7 @@ QUES_TEMPLATE = 'make 3 relative questions with {}'\
 def chatbot(ques):
     print(ques)
     text_list, source_list = match_query(ques, database="milvus")
-    print(text_list)
+    print("textlist:", text_list)
     response = zhipuai.model_api.sse_invoke(
         model="chatglm_pro",
         prompt=[

@@ -117,7 +117,7 @@ def chat():
                         st.markdown(texts[i])
             except Exception as e:
                 print(e)
-            # new_list = relative_ques(st.session_state.prompt)
+            new_list = relative_ques(st.session_state.prompt)
             st.session_state.prompt = None
 
 
