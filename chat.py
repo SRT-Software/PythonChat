@@ -32,7 +32,7 @@ def relative_ques(ques):
     response = zhipuai.model_api.sse_invoke(
         model="chatglm_pro",
         prompt=[
-            {"role": "user", "content": },
+            {"role": "user", "content": QUES_TEMPLATE.format(ques)},
         ],
         temperature=0.95,
         top_p=0.7,
