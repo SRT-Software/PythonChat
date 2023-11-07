@@ -56,19 +56,20 @@ def chat_web():
     st.markdown('<div class="title">Chat</div>', unsafe_allow_html=True)
     with st.sidebar:
         st.title("提示")
-    globals()["siderbar"] = st.sidebar.empty()
-    with globals()["siderbar"]:
-        print("buttons: ", st.session_state.lists)
-        globals()["btn0"] = st.button(label=st.session_state.lists[0], use_container_width=True, key='btn1')
-        if globals()["btn0"]:
+    globals()["btn1"] = st.sidebar.empty()
+    print("buttons: ", st.session_state.lists)
+    with globals()["btn1"]:
+        if st.button(label=st.session_state.lists[0], use_container_width=True, key='btn1'):
             st.session_state.prompt = st.session_state.lists[0]
             st.toast('正在生成提示词', icon='🎈')
-        globals()["btn1"] = st.button(label=st.session_state.lists[1], use_container_width=True, key='btn2')
-        if globals()["btn1"]:
+    globals()["btn2"] = st.sidebar.empty()
+    with globals()["btn2"]:
+        if st.button(label=st.session_state.lists[1], use_container_width=True, key='btn2'):
             st.session_state.prompt = st.session_state.lists[1]
             st.toast('正在生成提示词', icon='🎈')
-        globals()["btn2"] = st.button(label=st.session_state.lists[2], use_container_width=True, key='btn3')
-        if globals()["btn2"]:
+    globals()["btn3"] = st.sidebar.empty()
+    with globals()["btn3"]:
+        if st.button(label=st.session_state.lists[2], use_container_width=True, key='btn3'):
             st.session_state.prompt = st.session_state.lists[2]
             st.toast('正在生成提示词', icon='🎈')
 
@@ -130,19 +131,17 @@ def chat():
         #             st.markdown(texts[i])
             st.session_state.lists = relative_ques(st.session_state.prompt)
             st.session_state.prompt = None
-            with globals()["siderbar"]:
-                st.title("提示")
-                print("buttons: ", st.session_state.lists)
-                globals()["btn0"] = st.button(label=st.session_state.lists[0], use_container_width=True, key='btn4')
-                if globals()["btn0"]:
+            print("buttons: ", st.session_state.lists)
+            with globals()["btn0"] :
+                if st.button(label=st.session_state.lists[0], use_container_width=True, key='btn4'):
                     st.session_state.prompt = st.session_state.lists[0]
                     st.toast('正在生成提示词', icon='🎈')
-                globals()["btn1"] = st.button(label=st.session_state.lists[1], use_container_width=True, key='btn5')
-                if globals()["btn1"]:
+            with globals()["btn1"] :
+                if st.button(label=st.session_state.lists[1], use_container_width=True, key='btn5'):
                     st.session_state.prompt = st.session_state.lists[1]
                     st.toast('正在生成提示词', icon='🎈')
-                globals()["btn2"] = st.button(label=st.session_state.lists[2], use_container_width=True, key='btn6')
-                if globals()["btn2"]:
+            with globals()["btn2"]:
+                if st.button(label=st.session_state.lists[2], use_container_width=True, key='btn6'):
                     st.session_state.prompt = st.session_state.lists[2]
                     st.toast('正在生成提示词', icon='🎈')
 
