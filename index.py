@@ -49,17 +49,17 @@ def chat_web():
         unsafe_allow_html=True
     )
     st.markdown('<div class="title">Chat</div>', unsafe_allow_html=True)
-    with st.sidebar:
-        random_question()
-        st.title("提示")
-        option = st.selectbox(
-            'How would you like to be contacted?',
-            (globals()["new_list"][0], globals()["new_list"][1], globals()["new_list"][2]),
-            index=None,
-            placeholder="选择对应的提示",
-        )
-        print("option ", option)
-        st.session_state.prompt = option
+    # with st.sidebar:
+    #     random_question()
+    #     st.title("提示")
+    #     option = st.selectbox(
+    #         'How would you like to be contacted?',
+    #         (globals()["new_list"][0], globals()["new_list"][1], globals()["new_list"][2]),
+    #         index=None,
+    #         placeholder="选择对应的提示",
+    #     )
+    #     print("option ", option)
+    #     st.session_state.prompt = option
     hello()
     chat()
 
@@ -140,7 +140,6 @@ if __name__ == '__main__':
 
     if 'option' not in st.session_state:
         st.session_state.prompt = None
-    st.toast("🎈 侧边栏为问答提示")
     demo_name = pages_name_index[st.session_state.index]
     pages_name_func[demo_name]()
 
