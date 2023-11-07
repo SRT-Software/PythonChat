@@ -57,6 +57,9 @@ def chat_web():
             placeholder="选择对应的提示",
         )
 
+        if option:
+            st.session_state.prompt = option
+
     hello()
     chat()
 
