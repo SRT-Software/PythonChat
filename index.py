@@ -63,17 +63,17 @@ def chat_web():
     globals()["btn1"] = st.sidebar.empty()
     print("buttons: ", st.session_state.lists)
     with globals()["btn1"]:
-        if st.button(label=st.session_state.lists[0], use_container_width=True, key='btn1', on_click=button_callback, args=0):
+        if st.button(label=st.session_state.lists[0], use_container_width=True, key='btn1', on_click=lambda: button_callback(0)):
             st.session_state.prompt = st.session_state.lists[0]
             st.toast('正在生成提示词', icon='🎈')
     globals()["btn2"] = st.sidebar.empty()
     with globals()["btn2"]:
-        if st.button(label=st.session_state.lists[1], use_container_width=True, key='btn2', on_click=button_callback, args=1):
+        if st.button(label=st.session_state.lists[1], use_container_width=True, key='btn2', on_click=lambda: button_callback(1)):
             st.session_state.prompt = st.session_state.lists[1]
             st.toast('正在生成提示词', icon='🎈')
     globals()["btn3"] = st.sidebar.empty()
     with globals()["btn3"]:
-        st.button(label=st.session_state.lists[2], use_container_width=True, key='btn3', on_click=button_callback, args=2)
+        st.button(label=st.session_state.lists[2], use_container_width=True, key='btn3', on_click=lambda: button_callback(2))
 
     hello()
     chat()
@@ -134,15 +134,15 @@ def chat():
             st.session_state.prompt = None
             print("buttons: ", st.session_state.lists)
             with globals()["btn1"] :
-                if st.button(label=st.session_state.lists[0], use_container_width=True, key='btn4', on_click=button_callback, args=0):
+                if st.button(label=st.session_state.lists[0], use_container_width=True, key='btn4', on_click=lambda: button_callback(0)):
                     st.session_state.prompt = st.session_state.lists[0]
                     st.toast('正在生成提示词', icon='🎈')
             with globals()["btn2"] :
-                if st.button(label=st.session_state.lists[1], use_container_width=True, key='btn5', args=1):
+                if st.button(label=st.session_state.lists[1], use_container_width=True, key='btn5', on_click=lambda: button_callback(1)):
                     st.session_state.prompt = st.session_state.lists[1]
                     st.toast('正在生成提示词', icon='🎈')
             with globals()["btn3"]:
-                if st.button(label=st.session_state.lists[2], use_container_width=True, key='btn6', args=2):
+                if st.button(label=st.session_state.lists[2], use_container_width=True, key='btn6', on_click=lambda: button_callback(2)):
                     st.session_state.prompt = st.session_state.lists[2]
                     st.toast('正在生成提示词', icon='🎈')
 
