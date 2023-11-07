@@ -55,7 +55,7 @@ def chat_web():
     )
     st.markdown('<div class="title">Chat</div>', unsafe_allow_html=True)
     globals()["siderbar"] = st.sidebar.empty()
-    with siderbar:
+    with globals()["siderbar"]:
         st.title("提示")
         print("buttons: ", st.session_state.lists)
         globals()["btn0"] = st.button(label=st.session_state.lists[0], use_container_width=True, key='btn1')
@@ -130,15 +130,20 @@ def chat():
             st.session_state.lists = relative_ques(st.session_state.prompt)
             st.session_state.prompt = None
             with globals()["siderbar"]:
-                btn_obj = st.session_state.btn1
-                btn_obj.label = st.session_state.lists[0]
-                btn_obj()
-                btn_obj = st.session_state.btn2
-                btn_obj.label = st.session_state.lists[1]
-                btn_obj()
-                btn_obj = st.session_state.btn3
-                btn_obj.label = st.session_state.lists[2]
-                btn_obj()
+                st.title("提示")
+                print("buttons: ", st.session_state.lists)
+                globals()["btn0"] = st.button(label=st.session_state.lists[0], use_container_width=True, key='btn4')
+                if globals()["btn0"]:
+                    st.session_state.prompt = st.session_state.lists[0]
+                    st.toast('正在生成提示词', icon='🎈')
+                globals()["btn1"] = st.button(label=st.session_state.lists[1], use_container_width=True, key='btn5')
+                if globals()["btn1"]:
+                    st.session_state.prompt = st.session_state.lists[1]
+                    st.toast('正在生成提示词', icon='🎈')
+                globals()["btn2"] = st.button(label=st.session_state.lists[2], use_container_width=True, key='btn6')
+                if globals()["btn2"]:
+                    st.session_state.prompt = st.session_state.lists[2]
+                    st.toast('正在生成提示词', icon='🎈')
 
 
 
