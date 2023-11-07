@@ -41,17 +41,14 @@ def login_web():
 def button_callback0():
     st.session_state.prompt = st.session_state.lists[0]
     st.toast('正在生成提示词', icon='🎈')
-    st.experimental_rerun()
 
 def button_callback1():
     st.session_state.prompt = st.session_state.lists[1]
     st.toast('正在生成提示词', icon='🎈')
-    st.experimental_rerun()
 
 def button_callback2():
     st.session_state.prompt = st.session_state.lists[2]
     st.toast('正在生成提示词', icon='🎈')
-    st.experimental_rerun()
 
 
 def chat_web():
@@ -74,7 +71,8 @@ def chat_web():
     globals()["btn1"] = st.sidebar.empty()
     print("buttons: ", st.session_state.lists)
     with globals()["btn1"]:
-        st.button(label=st.session_state.lists[0], use_container_width=True, key='btn1', on_click=button_callback0)
+        if st.button(label=st.session_state.lists[0], use_container_width=True, key='btn1'):
+            button_callback0()
     globals()["btn2"] = st.sidebar.empty()
     with globals()["btn2"]:
         st.button(label=st.session_state.lists[1], use_container_width=True, key='btn2', on_click=button_callback1)
