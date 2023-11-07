@@ -12,54 +12,55 @@ from pymilvus import (
     Collection,
 )
 import numpy as np
-import time
 
 
 def match_query(ques, database="pinecone"):
-    idx = 0
-    try:
-        while True:
-            idx += 1
-            embedding = zhipuai.model_api.invoke(
-                model="text_embedding",
-                prompt=ques
-            )['data']['embedding']
-            text_list = []
-            source_list = []
-            if database == "pinecone":
-                p = initPinecone()
-                index = p.Index(PINECONE_INDEX_NAME)
-                res = index.query(embedding,
-                                  top_k=4,
-                                  include_metadata=True,
-                                  )
-                text_list = [text['metadata']['text'] for text in query['matches']]
-                source_list = [(text['metadata']['source'], text['metadata']['page']) for text in query['matches']]
-                return text_list, source_list
-            else:
-                milvus = initMilvus();
-                milvus.load()
-                vectors_to_search = embedding
-                search_params = {
-                    "metric_type": "L2",
-                    "params": {"nprobe": 10},
-                }
+    embedding = zhipuai.model_api.invoke(
+        model="text_embedding",
+        prompt=ques
+    )['data']['embedding']
+    text_list = []
+    source_list = []
+    if database == "pinecone":
+        p = initPinecone()
+        index = p.Index(PINECONE_INDEX_NAME)
+        res = index.query(embedding,
+                          top_k=4,
+                          include_metadata=True,
+        )
+        text_list = [text['metadata']['text'] for text in query['matches']]
+        source_list = [(text['metadata']['source'], text['metadata']['page']) for text in query['matches']]
+        return text_list, source_list
+    else:
+        milvus = initMilvus();
+        milvus.load()
+        vectors_to_search = embedding
+        search_params = {
+            "metric_type": "L2",
+            "params": {"nprobe": 10},
+        }
 
-                results = milvus.search([vectors_to_search], "embeddings", search_params, limit=7,
-                                        output_fields=["metadata"])
-                for result in results[0]:
-                    # print('Vector ID:', result.id, ' Distance:', result.distance, 'Entity:', result.entity)
-                    metadata = json.loads(result.entity.get('metadata'))
-                    # print(type(metadata), ' ', metadata)
-                    text_list.append(metadata['text'])
-                    source_list.append((metadata['source'], metadata['page']))
-                return text_list, source_list
-    except Exception as e:
-        print(e)
-        time.sleep(0.5)
-        if idx >= 10:
-            raise e
+        results = milvus.search([vectors_to_search], "embeddings", search_params, limit=7 ,output_fields=["metadata"])
+        for result in results[0]:
+            # print('Vector ID:', result.id, ' Distance:', result.distance, 'Entity:', result.entity)
+            metadata = json.loads(result.entity.get('metadata'))
+            # print(type(metadata), ' ', metadata)
+            text_list.append(metadata['text'])
+            source_list.append((metadata['source'], metadata['page']))
+        return text_list, source_list
 
+        # # 确保搜索操作成功
+        # if status.OK():
+        #     print('Search completed successfully.')
+        #     for result in results[0]:
+        #         print('Vector ID:', result.id, ' Distance:', result.distance)
+        #         metadata = milvus.get_entity_by_id(collection_name='pdf_collection', ids=[result.id])
+        #         text_list.append(metadata['text'])
+        #         source_list.append((metadata['source'], metadata['page']))
+        # else:
+        #     print('Error occurred while searching:', status)
+
+        # return text_list, source_list
 
 
 
